@@ -6,7 +6,9 @@ services:
       POSTGRES_PASSWORD: mnemo
       POSTGRES_DB: mnemo
     ports:
-      - "5432:5432"
+      # Host 5433 -> container 5432 (avoids clashing with a local Postgres on 5432).
+      # The app service talks to the db over the compose network on 5432 regardless.
+      - "5433:5432"
     volumes:
       - mnemo_pgdata:/var/lib/postgresql/data
     healthcheck:

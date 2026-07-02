@@ -1,4 +1,6 @@
-FROM python:3.12-slim
+# Pin the exact patch version so `pipenv install --deploy` (which enforces the
+# Pipfile's python_full_version) matches and the build is reproducible.
+FROM python:3.12.3-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
