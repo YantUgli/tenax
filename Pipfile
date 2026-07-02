@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+openai = "*"
+fastmcp = "*"
+psycopg = {extras = ["binary"], version = "*"}
+pgvector = "*"
+sqlalchemy = "*"
+pydantic = "*"
+pydantic-settings = "*"
+python-dotenv = "*"
+fastapi = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+streamlit = "*"
+numpy = "*"
+tiktoken = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.3"

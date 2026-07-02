@@ -1,0 +1,28 @@
+# Environment / secrets
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Virtualenv (pipenv manages its own; ignore any local ones)
+.venv/
+venv/
+
+# Data / logs
+*.log
+data/
+*.sqlite
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
