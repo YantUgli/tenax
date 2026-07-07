@@ -1,0 +1,28 @@
+{
+  "benchmark": "knowledge-update / belief revision (Langkah 3.1, retrieval form)",
+  "measured": "2026-07-07",
+  "n_updates": 6,
+  "updates_passed": 6,
+  "update_pass_rate": 1.0,
+  "updates_applied": 6,
+  "n_traps": 3,
+  "traps_passed": 3,
+  "wrong_supersede_incidents": 0,
+  "gate2_retrieval_form_pass": true,
+  "config": {
+    "budget": 200,
+    "base_age_days": 30.0,
+    "n_distractors": 6
+  },
+  "elapsed_sec": 29.4,
+  "usage": {
+    "chat_prompt": 5495,
+    "chat_completion": 373,
+    "chat_calls": 17,
+    "embed_prompt": 368,
+    "embed_calls": 20,
+    "chat_total": 5868,
+    "embed_total": 368,
+    "rotation_model_idx": 0
+  }
+}

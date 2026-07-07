@@ -51,7 +51,9 @@ def _cluster(rows: list[Memory], threshold: float) -> list[list[int]]:
     return clusters
 
 
-def consolidate(session, client: QwenClient, user_id: str, *, threshold: float | None = None) -> dict:
+def consolidate(
+    session, client: QwenClient, user_id: str, *, threshold: float | None = None, cheap: bool = False
+) -> dict:
     s = get_settings()
     threshold = threshold if threshold is not None else s.consolidate_similarity
 
@@ -81,7 +83,8 @@ def consolidate(session, client: QwenClient, user_id: str, *, threshold: float |
             [
                 {"role": "system", "content": _SYSTEM},
                 {"role": "user", "content": bullet},
-            ]
+            ],
+            cheap=cheap,
         )
         facts = [f.strip() for f in (data.get("facts", []) if isinstance(data, dict) else []) if f.strip()]
         if not facts:

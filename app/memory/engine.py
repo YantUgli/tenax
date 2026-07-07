@@ -4,13 +4,16 @@ It owns a single Qwen client and runs each operation inside a transactional sess
 """
 from __future__ import annotations
 
-from sqlalchemy import func, select
+from datetime import datetime
+
+from sqlalchemy import delete, func, select
 
 from app.db import session_scope
 from app.memory import consolidate as _consolidate
 from app.memory import extract as _extract
 from app.memory import forget as _forget
 from app.memory import retrieve as _retrieve
+from app.memory import revise as _revise
 from app.memory.models import Memory, MemStatus, MemType
 from app.qwen_client import QwenClient
 
@@ -20,7 +23,23 @@ class MemoryEngine:
         self._client = client or QwenClient()
 
     # -------------------------------------------------------------- write
-    def remember(self, user_id: str, text: str, *, source: str | None = None, cheap: bool = False) -> dict:
+    def remember(
+        self,
+        user_id: str,
+        text: str,
+        *,
+        source: str | None = None,
+        cheap: bool = False,
+        event_time: datetime | None = None,
+    ) -> dict:
+        """Extract and persist memories from ``text``.
+
+        ``event_time`` back-dates the created rows: when a memory refers to something that
+        happened at a known past time (e.g. replaying a multi-session benchmark history),
+        pass the session timestamp so ``created_at``/``last_accessed`` reflect *when the
+        event occurred* rather than now(). This is what makes temporal reasoning and
+        recency measurable — without it every replayed memory looks equally recent.
+        """
         extracted = _extract.extract_memories(self._client, text, cheap=cheap)
         if not extracted:
             return {"created": [], "note": "nothing worth remembering"}
@@ -28,6 +47,7 @@ class MemoryEngine:
         embeddings = self._client.embed([e["content"] for e in extracted])
         created = []
         with session_scope() as session:
+            new_mems: list[Memory] = []
             for e, emb in zip(extracted, embeddings):
                 mem = Memory(
                     user_id=user_id,
@@ -37,10 +57,17 @@ class MemoryEngine:
                     embedding=emb,
                     source=source,
                 )
+                if event_time is not None:
+                    mem.created_at = event_time
+                    mem.last_accessed = event_time
                 session.add(mem)
                 session.flush()
+                new_mems.append(mem)
                 created.append(mem.as_dict())
-        return {"created": created}
+            # Belief revision: archive stored facts the new ones genuinely update or
+            # contradict (superseded_by -> new id). No similar candidates = no LLM call.
+            revision = _revise.revise(session, self._client, user_id, new_mems, cheap=cheap)
+        return {"created": created, "superseded": revision["superseded"]}
 
     # --------------------------------------------------------------- read
     def recall(self, user_id: str, query: str, *, token_budget: int | None = None, candidate_k: int = 30) -> dict:
@@ -51,16 +78,40 @@ class MemoryEngine:
             )
 
     # ------------------------------------------------------------- forget
-    def forget(self, user_id: str, *, threshold: float | None = None) -> dict:
+    def forget(
+        self, user_id: str, *, threshold: float | None = None, now: datetime | None = None
+    ) -> dict:
+        """Run the decay sweep. ``now`` lets a benchmark drive a simulated clock so
+        multiple forget cycles can be measured without waiting real wall-clock time."""
         with session_scope() as session:
-            return _forget.sweep(session, user_id, threshold=threshold)
+            return _forget.sweep(session, user_id, threshold=threshold, now=now)
 
     # ------------------------------------------------------------ reflect
-    def reflect(self, user_id: str, *, threshold: float | None = None) -> dict:
+    def reflect(
+        self, user_id: str, *, threshold: float | None = None, cheap: bool = False
+    ) -> dict:
+        """Consolidate near-duplicate memories. ``cheap`` routes the distillation LLM to
+        the cheap model (qwen-turbo); the default chat model is used otherwise."""
         with session_scope() as session:
-            return _consolidate.consolidate(session, self._client, user_id, threshold=threshold)
+            return _consolidate.consolidate(
+                session, self._client, user_id, threshold=threshold, cheap=cheap
+            )
 
     # -------------------------------------------------------------- utils
+    def purge(self, user_id: str) -> dict:
+        """Hard-delete every memory for ``user_id``.
+
+        Benchmark isolation primitive: each question owns its own history under a unique
+        ``user_id`` (e.g. ``bench:{item_id}``), and ``purge`` resets that namespace cleanly
+        so no facts leak between questions. Unlike ``forget``, this deletes rather than
+        archives — it is for test setup/teardown, not for the self-managing memory loop.
+        """
+        with session_scope() as session:
+            deleted = session.execute(
+                delete(Memory).where(Memory.user_id == user_id)
+            ).rowcount
+        return {"user_id": user_id, "deleted": int(deleted or 0)}
+
     def list_memories(self, user_id: str, *, status: str = "active", limit: int = 100) -> list[dict]:
         with session_scope() as session:
             stmt = select(Memory).where(Memory.user_id == user_id)

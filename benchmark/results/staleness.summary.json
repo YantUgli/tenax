@@ -1,0 +1,68 @@
+{
+  "benchmark": "staleness-resilience (Langkah 4)",
+  "gate6_pass": true,
+  "variants": {
+    "accessed": {
+      "variant": "accessed",
+      "cycles": 3,
+      "delta_days": 14.0,
+      "final_survival_rate": 1.0,
+      "final_survived": 6,
+      "important_total": 6,
+      "total_wrong_merge_incidents": 0,
+      "distinct_pair_preserved": true,
+      "correct_merge_happened": true,
+      "near_dup_answer_survived": true,
+      "reflect_totals": {
+        "clusters_found": 1,
+        "memories_merged": 2,
+        "semantic_created": 1
+      },
+      "final_counts": {
+        "active": 8,
+        "archived": 12
+      }
+    },
+    "dormant": {
+      "variant": "dormant",
+      "cycles": 3,
+      "delta_days": 14.0,
+      "final_survival_rate": 0.0,
+      "final_survived": 0,
+      "important_total": 6,
+      "total_wrong_merge_incidents": 0,
+      "distinct_pair_preserved": false,
+      "correct_merge_happened": true,
+      "near_dup_answer_survived": false,
+      "reflect_totals": {
+        "clusters_found": 1,
+        "memories_merged": 2,
+        "semantic_created": 1
+      },
+      "final_counts": {
+        "archived": 20
+      }
+    }
+  },
+  "elapsed_sec": 16.5,
+  "usage": {
+    "chat_prompt": 266,
+    "chat_completion": 38,
+    "chat_calls": 2,
+    "embed_prompt": 1482,
+    "embed_calls": 97,
+    "chat_total": 304,
+    "embed_total": 1482,
+    "rotation_model_idx": 0
+  },
+  "config": {
+    "cycles": 3,
+    "delta_days": 14.0,
+    "base_age_days": 1.0,
+    "budget": 150,
+    "variant": "both",
+    "n_important": 6,
+    "n_near_dup": 3,
+    "n_distractors": 10
+  }
+}

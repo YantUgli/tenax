@@ -1,0 +1,67 @@
+{
+  "n_items": 16,
+  "overall_accuracy": null,
+  "per_category": {
+    "abstention": {
+      "n": 1,
+      "accuracy": null
+    },
+    "knowledge-update": {
+      "n": 3,
+      "accuracy": null
+    },
+    "multi-session": {
+      "n": 4,
+      "accuracy": null
+    },
+    "single-session-assistant": {
+      "n": 2,
+      "accuracy": null
+    },
+    "single-session-preference": {
+      "n": 1,
+      "accuracy": null
+    },
+    "single-session-user": {
+      "n": 3,
+      "accuracy": null
+    },
+    "temporal-reasoning": {
+      "n": 2,
+      "accuracy": null
+    }
+  },
+  "retrieval_hit_rate": 0.875,
+  "retrieval_hit_scored": 16,
+  "avg_tokens_per_query": 1190.8125,
+  "elapsed_sec": 1033.4,
+  "errors": 1,
+  "usage": {
+    "chat_prompt": 640692,
+    "chat_completion": 47145,
+    "chat_calls": 259,
+    "embed_prompt": 30865,
+    "embed_calls": 216,
+    "chat_total": 687837,
+    "embed_total": 30865,
+    "rotation_model_idx": 0
+  },
+  "config": {
+    "dataset": "data/longmemeval_s.json",
+    "budget": 1200,
+    "candidate_k": 50,
+    "granularity": "session",
+    "cheap": false,
+    "baseline": "none",
+    "retrieval_only": true,
+    "judge_model": null,
+    "sample": 20,
+    "seed": 13,
+    "shuffle": false,
+    "max_sessions_per_item": 15,
+    "skip_ingest": false,
+    "rotate_models": false
+  },
+  "stopped_early": true,
+  "completed": 17
+}

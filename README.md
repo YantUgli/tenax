@@ -1,4 +1,4 @@
-# 🧠 Mnemo — Persistent Memory for AI Agents, powered by Qwen Cloud
+# Mnemo — Persistent Memory for AI Agents, powered by Qwen Cloud
 
 > **Global AI Hackathon Series with Qwen Cloud — Track 1: MemoryAgent**
 
@@ -26,6 +26,10 @@ Track 1 rewards three behaviours; Mnemo answers each directly:
 Plus a reflection/**consolidation** skill that clusters near-duplicates and asks Qwen to
 distill them into canonical facts — shrinking storage and sharpening precision.
 
+And **belief revision** at write time: when a new fact genuinely updates or contradicts a
+stored one ("moved to Singapore" vs "lives in Jakarta"), the stale belief is archived with
+a `superseded_by` pointer — recall serves the current truth instead of both versions.
+
 ## Architecture
 
 ```
@@ -36,13 +40,14 @@ distill them into canonical facts — shrinking storage and sharpening precision
    │  FastAPI + MCP server   (Alibaba Cloud ECS, Docker Compose) │
    │   app/mcp_server.py   →   app/memory/engine.py              │
    │        ├─ extract.py       (Qwen: what to remember)         │
+   │        ├─ revise.py        (Qwen: belief revision/updates)  │
    │        ├─ retrieve.py      (hybrid + budget-aware recall)   │
    │        ├─ forget.py        (decay + sweep)                  │
    │        └─ consolidate.py   (Qwen: reflection/distillation)  │
    └───────────┬───────────────────────────────┬───────────────┘
                │ Qwen Cloud (DashScope-intl)    │ SQLAlchemy
                ▼                                ▼
-     qwen-plus / qwen-turbo            PostgreSQL + pgvector
+     qwen-turbo                        PostgreSQL + pgvector
      text-embedding-v4                 (vectors + metadata + FTS)
 ```
 
@@ -53,7 +58,7 @@ See [docs/architecture.md](docs/architecture.md) (export a PNG from there for th
 All Qwen Cloud calls go through [app/qwen_client.py](app/qwen_client.py) (OpenAI-compatible
 client pointed at `https://dashscope-intl.aliyuncs.com/compatible-mode/v1`):
 
-- **`qwen-plus`** — memory extraction ([app/memory/extract.py](app/memory/extract.py)) and consolidation ([app/memory/consolidate.py](app/memory/consolidate.py))
+- **`qwen-turbo`** — memory extraction ([app/memory/extract.py](app/memory/extract.py)), belief revision ([app/memory/revise.py](app/memory/revise.py)) and consolidation ([app/memory/consolidate.py](app/memory/consolidate.py))
 - **`text-embedding-v4`** — embeddings for storage & retrieval ([app/memory/retrieve.py](app/memory/retrieve.py))
 
 ## Quickstart (local)
@@ -114,12 +119,24 @@ Tools exposed: `remember`, `recall`, `forget`, `reflect`, `list_memories`.
 | GET | `/memories` | `?user_id=&status=active|archived|all&limit=` |
 | GET | `/stats` | `?user_id=` |
 
-## Benchmark
+## Benchmark — measured, not claimed
 
-Quantifies hybrid + budget-aware recall vs a naive recency-only baseline:
+All numbers measured 7 Jul 2026 on the free tier (qwen-turbo + text-embedding-v4);
+raw records in [benchmark/results/](benchmark/results/), write-ups in [docs/](docs/).
+
+| What | Result |
+|---|---|
+| Hybrid recall vs recency-only, 30-distractor haystack (`benchmark/run.py`) | **6/6 vs 0/6** at the same 400-token budget |
+| LongMemEval retrieval hit-rate (`benchmark/longmemeval.py`) | **87.5%** (`_s` sample); evidence hit **100%** on the oracle set |
+| Knowledge update / belief revision (`benchmark/update.py`) | **6/6 updates applied**, stale beliefs out of context, **0 wrong-supersedes** (traps survived) |
+| Staleness resilience, 3 forget/reflect cycles (`benchmark/staleness.py`) | Actively-used facts survive **6/6 every cycle**, near-dups merge, **0 wrong-merges** |
+| Abstention | Refuses to answer when the fact was never stored |
 
 ```bash
-pipenv run python -m benchmark.run --reset --budget 400
+pipenv run python -m benchmark.run --reset --budget 400   # hybrid vs naive
+pipenv run python -m benchmark.update                     # belief revision
+pipenv run python -m benchmark.staleness                  # forget/reflect safety
+pipenv run python -m benchmark.longmemeval --dataset data/longmemeval_oracle.json --cheap --sample 50  # LongMemEval
 ```
 
 ## Deploy to Alibaba Cloud

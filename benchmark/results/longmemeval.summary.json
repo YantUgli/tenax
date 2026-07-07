@@ -1,0 +1,24 @@
+{
+  "n_items": 3,
+  "overall_accuracy": null,
+  "per_category": {
+    "single-session-user": {
+      "n": 3,
+      "accuracy": null
+    }
+  },
+  "retrieval_hit_rate": 1.0,
+  "retrieval_hit_scored": 3,
+  "avg_tokens_per_query": 1195.6666666666667,
+  "elapsed_sec": 618.2,
+  "errors": 0,
+  "config": {
+    "dataset": "data/longmemeval_s.json",
+    "budget": 1200,
+    "candidate_k": 50,
+    "granularity": "session",
+    "cheap": false,
+    "retrieval_only": true,
+    "judge_model": null
+  }
+}

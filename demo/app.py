@@ -14,7 +14,7 @@ import streamlit as st
 API = os.getenv("MNEMO_API", "http://localhost:8000")
 
 st.set_page_config(page_title="Mnemo — Qwen-powered memory", layout="wide")
-st.title("🧠 Mnemo — persistent memory for AI agents")
+st.title("Mnemo — persistent memory for AI agents")
 st.caption("Multi-tier memory · hybrid retrieval · forgetting curve · consolidation — powered by Qwen Cloud")
 
 with st.sidebar:
@@ -38,7 +38,7 @@ def get(path: str, params: dict) -> object:
 
 
 tab_remember, tab_recall, tab_mem, tab_maint = st.tabs(
-    ["✍️ Remember", "🔎 Recall", "📚 Memories", "🧹 Maintenance"]
+    ["Remember", "Recall", "Memories", "Maintenance"]
 )
 
 with tab_remember:

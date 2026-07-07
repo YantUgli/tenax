@@ -19,6 +19,7 @@ from app.db import session_scope
 from app.memory.models import Memory, MemStatus, MemType
 from app.memory.retrieve import count_tokens
 from app.qwen_client import QwenClient
+from benchmark.metrics import retrieval_hit
 
 USER = "benchmark"
 
@@ -119,11 +120,11 @@ def main() -> None:
     print("-" * 66)
     for _, query, expect in QA:
         res = engine.recall(USER, query, token_budget=args.budget)
-        m_ctx, m_tok = res["context"].lower(), res["tokens_used"]
+        m_ctx, m_tok = res["context"], res["tokens_used"]
         with session_scope() as session:
             b_ctx, b_tok = _baseline_recall(session, args.budget)
-        m_ok = expect in m_ctx
-        b_ok = expect in b_ctx.lower()
+        m_ok = retrieval_hit(m_ctx, expect)
+        b_ok = retrieval_hit(b_ctx, expect)
         mnemo_hits += m_ok
         base_hits += b_ok
         mnemo_tokens += m_tok

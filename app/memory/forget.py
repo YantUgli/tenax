@@ -35,15 +35,18 @@ def decay_score(memory: Memory, *, now: datetime | None = None, tau_days: float 
     return (memory.importance / 10.0) * recency * reinforcement
 
 
-def sweep(session, user_id: str, *, threshold: float | None = None) -> dict:
+def sweep(session, user_id: str, *, threshold: float | None = None, now: datetime | None = None) -> dict:
     """Archive active memories whose decay score has fallen below the threshold.
 
     Soft-forget (status -> archived) rather than delete: safer, reversible, and lets the
     demo visualize what was forgotten and why.
+
+    ``now`` overrides the reference time used to compute decay — pass a simulated clock to
+    replay several forget cycles deterministically (used by the staleness benchmark).
     """
     s = get_settings()
     threshold = threshold if threshold is not None else s.forget_threshold
-    now = _utcnow()
+    now = now or _utcnow()
 
     rows = session.scalars(
         select(Memory).where(Memory.user_id == user_id, Memory.status == MemStatus.active)

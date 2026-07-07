@@ -1,0 +1,22 @@
+{
+  "benchmark": "hybrid-vs-naive retrieval on distractor haystack (gate #1, retrieval form)",
+  "source": "benchmark/run.py --reset",
+  "measured": "2026-07-07",
+  "budget_tokens": 400,
+  "n_facts": 6,
+  "n_distractors": 30,
+  "mnemo_hybrid": {
+    "hits": 6,
+    "total": 6,
+    "hit_rate": 1.0,
+    "avg_tokens": 395
+  },
+  "baseline_recency_only": {
+    "hits": 0,
+    "total": 6,
+    "hit_rate": 0.0,
+    "avg_tokens": 400
+  },
+  "verdict": "hybrid > naive with a decisive margin (100% vs 0%): important-but-old facts flooded by recent distractors are surfaced by hybrid+budget recall and completely missed by recency-only, within the same token budget.",
+  "note": "This is the RETRIEVAL form of gate #1 (provable on free tier, ~0 quota: embeddings only). The end-to-end ACCURACY form (strong reader) is bounded by the permanently-dead qwen-plus and is recorded as a free-tier limitation, not a core failure."
+}
