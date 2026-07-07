@@ -15,7 +15,7 @@ API = os.getenv("MNEMO_API", "http://localhost:8000")
 
 st.set_page_config(page_title="Mnemo — Qwen-powered memory", layout="wide")
 st.title("Mnemo — persistent memory for AI agents")
-st.caption("Multi-tier memory · hybrid retrieval · forgetting curve · consolidation — powered by Qwen Cloud")
+st.caption("Multi-tier memory · hybrid retrieval · belief revision · forgetting curve · consolidation — powered by Qwen Cloud")
 
 with st.sidebar:
     st.header("Session")
@@ -53,6 +53,14 @@ with tab_remember:
             st.dataframe(pd.DataFrame(created)[["content", "mem_type", "importance"]], use_container_width=True)
         elif res.get("note"):
             st.info(res["note"])
+        superseded = res.get("superseded", [])
+        if superseded:
+            st.warning(f"Belief revised: {len(superseded)} stale fact(s) superseded and archived.")
+            st.dataframe(
+                pd.DataFrame(superseded)[["content", "superseded_by"]]
+                .rename(columns={"content": "stale belief (archived)", "superseded_by": "replaced by memory id"}),
+                use_container_width=True,
+            )
 
 with tab_recall:
     st.subheader("Recall — hybrid retrieval packed into the token budget")
@@ -83,7 +91,7 @@ with tab_mem:
         cols[2].metric("By status", ", ".join(f"{k}:{v}" for k, v in s.get("by_status", {}).items()) or "-")
     if "mems" in st.session_state and st.session_state["mems"]:
         df = pd.DataFrame(st.session_state["mems"])
-        show = [c for c in ["content", "mem_type", "importance", "decay_score", "access_count", "status", "created_at"] if c in df]
+        show = [c for c in ["content", "mem_type", "importance", "decay_score", "access_count", "status", "superseded_by", "created_at"] if c in df]
         st.dataframe(df[show], use_container_width=True)
 
 with tab_maint:
