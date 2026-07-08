@@ -47,7 +47,7 @@ Pisahkan dua metrik ke dua pool kuota, dan **jangan rotasi peran sensitif**:
 3. **`--max-sessions-per-item K`** — simpan semua sesi bukti (`answer_session_ids`) + isi hingga K sesi, urut kronologis untuk `event_time`. Batasi token/soal. Sentuh `iter_sessions()`/`ingest_item()`.
 4. **`--estimate`** — read-only: proyeksi token **chat & embed terpisah** vs 1M + jumlah panggilan, per konfigurasi. Reuse `count_tokens` (`app/memory/retrieve.py`); pola seperti `--dry-run`.
 5. **`--skip-ingest`** — pakai ulang bench user (+`--keep-users` yang ada) → iterasi eval murah.
-6. *(Opsional)* **`--raw-ingest`** — simpan sesi mentah + embedding, lewati ekstraksi → geser biaya ke pool embed. Bukan jalur tulis asli Mnemo (sadar trade-off).
+6. *(Opsional)* **`--raw-ingest`** — simpan sesi mentah + embedding, lewati ekstraksi → geser biaya ke pool embed. Bukan jalur tulis asli Tenax (sadar trade-off).
 
 ### `app/qwen_client.py`
 7. **Pelacak kuota** — akumulasi `resp.usage` (prompt/completion) terpisah chat vs embed; method `usage()`. Harness cetak pemakaian + peringatan mendekati 1M.

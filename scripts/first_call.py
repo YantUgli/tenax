@@ -18,7 +18,7 @@ def main() -> None:
     reply = client.chat([{"role": "user", "content": "Reply with exactly: Qwen Cloud is connected."}])
     print("Chat reply :", reply.strip())
 
-    vec = client.embed_one("Mnemo persistent memory smoke test")
+    vec = client.embed_one("Tenax persistent memory smoke test")
     print("Embed dim  :", len(vec))
     assert len(vec) == s.embed_dim, f"expected {s.embed_dim}, got {len(vec)}"
     print("\n✅ Qwen Cloud chat + embeddings both working.")

@@ -8,7 +8,7 @@ Baris pertama tabel riwayat untuk Langkah 3. Semua run free-tier DashScope. Data
 | Run | Dataset | Model (extract/reader/judge) | N | Metrik utama |
 |---|---|---|---|---|
 | Tahap 1 — probe retrieval | `_s` capped-15 | qwen-plus | 16 skor | **retrieval hit-rate 87.5%** |
-| Tahap 2a — Mnemo hybrid | `oracle` | qwen-turbo | 50 | **akurasi 42.0%**, hit-rate 100% |
+| Tahap 2a — Tenax hybrid | `oracle` | qwen-turbo | 50 | **akurasi 42.0%**, hit-rate 100% |
 | Tahap 2b — naif recency | `oracle` | qwen-turbo | 50 | akurasi 48.0% |
 
 > Model beda antar-run (qwen-plus habis kuota di tengah Tahap 1 → Tahap 2 pindah qwen-turbo).
@@ -17,7 +17,7 @@ Baris pertama tabel riwayat untuk Langkah 3. Semua run free-tier DashScope. Data
 
 ## Per-kategori (akurasi, oracle, qwen-turbo)
 
-| Kategori | n | Mnemo hybrid (2a) | Naif recency (2b) | Retrieval hit (Tahap 1, `_s`) |
+| Kategori | n | Tenax hybrid (2a) | Naif recency (2b) | Retrieval hit (Tahap 1, `_s`) |
 |---|---|---|---|---|
 | abstention | 3 | 100.0% | 100.0% | R+ |
 | single-session-user | 6 | 83.3% | 83.3% | R+ |
@@ -40,7 +40,7 @@ Baris pertama tabel riwayat untuk Langkah 3. Semua run free-tier DashScope. Data
    `benchmark/run.py`), bukan oracle.
 4. **temporal-reasoning terlemah (15%)** — kombinasi reasoning tanggal + reader qwen-turbo
    (lebih lemah dari plus). Baseline ini adalah **lantai**; qwen-plus akan lebih tinggi.
-5. **abstention 100%** — Mnemo benar berkata "tidak tahu" saat jawaban tak ada.
+5. **abstention 100%** — Tenax benar berkata "tidak tahu" saat jawaban tak ada.
 
 ## Kuota terpakai (free tier, ~1M/model)
 

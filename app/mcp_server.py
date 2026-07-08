@@ -1,4 +1,4 @@
-"""MCP server exposing Mnemo as drop-in memory tools for any MCP client.
+"""MCP server exposing Tenax as drop-in memory tools for any MCP client.
 
 Run over stdio (for Claude Desktop / Qwen desktop clients):
     pipenv run python -m app.mcp_server
@@ -14,7 +14,7 @@ from fastmcp import FastMCP
 
 from app.memory.engine import MemoryEngine
 
-mcp = FastMCP("Mnemo Memory")
+mcp = FastMCP("Tenax Memory")
 
 
 @lru_cache

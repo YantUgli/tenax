@@ -1,4 +1,4 @@
-# Mnemo Architecture
+# Tenax Architecture
 
 Export this diagram to `docs/architecture.png` (e.g. paste the Mermaid block into
 <https://mermaid.live> and download PNG) and attach it to the Devpost submission.

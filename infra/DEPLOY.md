@@ -1,4 +1,4 @@
-# Deploying Mnemo to Alibaba Cloud (ECS)
+# Deploying Tenax to Alibaba Cloud (ECS)
 
 Goal: a public backend running on **Alibaba Cloud**, which the hackathon requires you to
 prove with a short screen recording (separate from the demo video).
@@ -21,7 +21,7 @@ curl -fsSL https://get.docker.com | sh
 ## 3. Ship the code + configure
 
 ```bash
-git clone <YOUR_PUBLIC_REPO_URL> mnemo && cd mnemo
+git clone <YOUR_PUBLIC_REPO_URL> tenax && cd tenax
 cp .env.example .env      # set QWEN_API_KEY (leave DATABASE_URL; compose overrides host)
 ```
 

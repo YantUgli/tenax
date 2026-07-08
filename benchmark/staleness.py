@@ -1,6 +1,6 @@
 """Langkah 4 — staleness-resilience benchmark: does self-management corrupt memory?
 
-Standard benchmarks (LongMemEval) never test whether Mnemo's *self-managing* loop
+Standard benchmarks (LongMemEval) never test whether Tenax's *self-managing* loop
 (`forget` decay + `reflect` consolidation) destroys memory as time passes. This harness
 does, mapping directly to the Langkah-5 decision gate, criterion #6.
 
@@ -53,7 +53,7 @@ IMPORTANT: list[tuple[str, str, str]] = [
      "How should I address the user in a formal email?", "alvarez"),
     ("The user's startup, Northwind, focuses on supply-chain forecasting.",
      "What does the user's company do?", "supply-chain"),
-    ("The user is deploying the Mnemo backend to the ap-southeast-1 region.",
+    ("The user is deploying the Tenax backend to the ap-southeast-1 region.",
      "Which cloud region is the user deploying to?", "ap-southeast-1"),
     ("The user's advisor for the RAG research is Dr. Lin at Tsinghua.",
      "Who is the user's research advisor?", "lin"),

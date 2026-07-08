@@ -3,4 +3,4 @@ from app.db import init_db
 
 if __name__ == "__main__":
     init_db()
-    print("Mnemo schema initialized.")
+    print("Tenax schema initialized.")

@@ -1,12 +1,12 @@
-# Rangkuman Pengembangan Mnemo
+# Rangkuman Pengembangan Tenax
 
-Dokumen ini merangkum diskusi mengenai arah pengembangan **Mnemo** — memory layer persisten untuk AI agent (hackathon Qwen Cloud, Track 1). Disusun sebagai acuan keputusan, dari analisis kondisi saat ini sampai keputusan strategis penambahan dimensi *grounded*.
+Dokumen ini merangkum diskusi mengenai arah pengembangan **Tenax** — memory layer persisten untuk AI agent (hackathon Qwen Cloud, Track 1). Disusun sebagai acuan keputusan, dari analisis kondisi saat ini sampai keputusan strategis penambahan dimensi *grounded*.
 
 ---
 
-## 1. Kondisi Mnemo saat ini
+## 1. Kondisi Tenax saat ini
 
-Mnemo adalah memory layer swakelola yang bisa dipasang ke agent MCP mana pun. Komponennya: MCP server + REST API (FastAPI), Qwen Cloud untuk ekstraksi (`qwen-plus`) dan embedding (`text-embedding-v4`), serta PostgreSQL + pgvector untuk penyimpanan.
+Tenax adalah memory layer swakelola yang bisa dipasang ke agent MCP mana pun. Komponennya: MCP server + REST API (FastAPI), Qwen Cloud untuk ekstraksi (`qwen-plus`) dan embedding (`text-embedding-v4`), serta PostgreSQL + pgvector untuk penyimpanan.
 
 Empat operasi inti:
 
@@ -38,7 +38,7 @@ Arsitekturnya rapi dan pilihan desainnya sejalan dengan arah riset memory-agent 
 
 ### 2.3 Evaluasi & kredibilitas
 
-Benchmark saat ini hanya satu dataset sintetis vs baseline recency. Bidang ini punya tolok ukur standar: **LoCoMo**, **LongMemEval**, dan **BEAM**. Menjalankan Mnemo terhadap salah satunya (LongMemEval paling relevan karena menguji knowledge update & temporal) mengubah proyek dari prototipe jadi sesuatu yang angkanya bisa diklaim. Rasio dampak-terhadap-usaha paling tinggi.
+Benchmark saat ini hanya satu dataset sintetis vs baseline recency. Bidang ini punya tolok ukur standar: **LoCoMo**, **LongMemEval**, dan **BEAM**. Menjalankan Tenax terhadap salah satunya (LongMemEval paling relevan karena menguji knowledge update & temporal) mengubah proyek dari prototipe jadi sesuatu yang angkanya bisa diklaim. Rasio dampak-terhadap-usaha paling tinggi.
 
 ### 2.4 Arah produk
 
@@ -57,9 +57,9 @@ Autentikasi & multi-tenancy (belum ada auth; scoping baru sebatas `user_id`), pr
 ### Prinsip: pisahkan *ingestion* dari *memory*
 
 - **Ingestion / ekstraksi** (file/foto → teks/info) adalah pipeline preprocessing.
-- **Memory** (apa yang diingat, retrieval, forgetting) adalah tugas Mnemo.
+- **Memory** (apa yang diingat, retrieval, forgetting) adalah tugas Tenax.
 
-Karena Mnemo lapisan "tengah" (MCP), ekstraksi tidak harus hidup di dalamnya — bisa langkah upstream atau tool MCP terpisah (`ingest`/`remember_file`). Engine memori tetap satu tanggung jawab.
+Karena Tenax lapisan "tengah" (MCP), ekstraksi tidak harus hidup di dalamnya — bisa langkah upstream atau tool MCP terpisah (`ingest`/`remember_file`). Engine memori tetap satu tanggung jawab.
 
 ### Soal "membuang source": simpan keduanya
 
@@ -79,13 +79,13 @@ Mesin `forget`/decay dan `reflect` dirancang untuk fakta personal yang berevolus
 
 ### Apa itu NotebookLM
 
-Sistem RAG **source-grounded**: hanya menjawab dari sumber yang diunggah, setiap klaim diberi sitasi span ke paragraf asal. Filosofinya: **tidak pernah membuang source, tidak pernah melupakan.** Ini kebalikan dari Mnemo yang mendistilasi (lossy) dan melupakan.
+Sistem RAG **source-grounded**: hanya menjawab dari sumber yang diunggah, setiap klaim diberi sitasi span ke paragraf asal. Filosofinya: **tidak pernah membuang source, tidak pernah melupakan.** Ini kebalikan dari Tenax yang mendistilasi (lossy) dan melupakan.
 
 ### Implikasi: ini percabangan, bukan sekadar penambahan
 
 Di sumbu retensi, keduanya berlawanan:
 
-| Aspek | Mnemo (evolving) | NotebookLM (grounded) |
+| Aspek | Tenax (evolving) | NotebookLM (grounded) |
 |---|---|---|
 | Perlakuan input | Distilasi lossy | Sumber utuh |
 | Waktu | Melupakan (decay) | Tidak melupakan |
@@ -96,8 +96,8 @@ NotebookLM sekaligus menjawab kekhawatiran "membuang source": desainnya adalah "
 
 ### Di mana ia cocok jadi acuan
 
-- **Cocok:** pipeline ingestion multimodal, dan terutama **provenance/sitasi span** (rantai chunk → source URI → offset). Ini fitur trust tertinggi yang belum dimiliki Mnemo.
-- **Tidak cocok ditiru:** filosofi forgetting/distilasi Mnemo — justru itu yang **tidak** dimiliki NotebookLM dan jangan dibuang.
+- **Cocok:** pipeline ingestion multimodal, dan terutama **provenance/sitasi span** (rantai chunk → source URI → offset). Ini fitur trust tertinggi yang belum dimiliki Tenax.
+- **Tidak cocok ditiru:** filosofi forgetting/distilasi Tenax — justru itu yang **tidak** dimiliki NotebookLM dan jangan dibuang.
 
 ### Peluang & kompetisi
 
@@ -138,7 +138,7 @@ Chunk dokumen lebih panjang dan importance-nya bermakna beda dari fakta personal
 
 ## 6. Analisis nilai: naik atau turun?
 
-Dimensi grounded adalah **pengali**, bukan sekadar tambahan — ia melipatgandakan kondisi inti Mnemo saat ini.
+Dimensi grounded adalah **pengali**, bukan sekadar tambahan — ia melipatgandakan kondisi inti Tenax saat ini.
 
 ### Kenapa bisa naik
 
@@ -157,7 +157,7 @@ Dimensi grounded adalah **pengali**, bukan sekadar tambahan — ia melipatgandak
 ### Dua variabel penentu
 
 1. **Urutan (sequencing).** Inti memori adalah fondasi; grounded bergantung padanya, bukan sebaliknya. Tambah grounded **sebelum** inti solid & ter-benchmark → nilai **turun**. Tambah **setelah** inti terbukti → nilai **naik**.
-2. **Framing.** Posisikan grounded sebagai **pelayan keterpercayaan memori** ("memori yang bisa dipercaya karena tertelusur ke sumber"), bukan "Mnemo juga jadi NotebookLM". Framing ini menjaga fokus konsep Mnemo tetap utuh.
+2. **Framing.** Posisikan grounded sebagai **pelayan keterpercayaan memori** ("memori yang bisa dipercaya karena tertelusur ke sumber"), bukan "Tenax juga jadi NotebookLM". Framing ini menjaga fokus konsep Tenax tetap utuh.
 
 ### Kesimpulan nilai
 

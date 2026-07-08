@@ -1,8 +1,8 @@
-"""Quantitative benchmark: Mnemo hybrid retrieval vs a naive recency baseline.
+"""Quantitative benchmark: Tenax hybrid retrieval vs a naive recency baseline.
 
 Both conditions share the same store. The dataset deliberately places the *relevant*
 facts in the past and floods the recent window with distractors, so a recency-only
-agent (the common "just keep the last N messages" approach) misses them while Mnemo's
+agent (the common "just keep the last N messages" approach) misses them while Tenax's
 hybrid + budget-aware recall still surfaces them within the same token budget.
 
 Run (stack must be up + QWEN_API_KEY set):
@@ -33,7 +33,7 @@ QA = [
      "How should I address the user in a formal email?", "alvarez"),
     ("The user's startup, Northwind, focuses on supply-chain forecasting.",
      "What does the user's company do?", "supply-chain"),
-    ("The user is deploying the Mnemo backend to the ap-southeast-1 region.",
+    ("The user is deploying the Tenax backend to the ap-southeast-1 region.",
      "Which cloud region is the user deploying to?", "ap-southeast-1"),
     ("The user's advisor for the RAG research is Dr. Lin at Tsinghua.",
      "Who is the user's research advisor?", "lin"),
@@ -113,10 +113,10 @@ def main() -> None:
         _seed(client)
         print(f"Seeded {len(QA)} facts + {len(DISTRACTORS) * 3} distractors for user '{USER}'.\n")
 
-    mnemo_hits = base_hits = 0
-    mnemo_tokens = base_tokens = 0
+    tenax_hits = base_hits = 0
+    tenax_tokens = base_tokens = 0
 
-    print(f"{'query':<48}{'Mnemo':>8}{'Baseline':>10}")
+    print(f"{'query':<48}{'Tenax':>8}{'Baseline':>10}")
     print("-" * 66)
     for _, query, expect in QA:
         res = engine.recall(USER, query, token_budget=args.budget)
@@ -125,16 +125,16 @@ def main() -> None:
             b_ctx, b_tok = _baseline_recall(session, args.budget)
         m_ok = retrieval_hit(m_ctx, expect)
         b_ok = retrieval_hit(b_ctx, expect)
-        mnemo_hits += m_ok
+        tenax_hits += m_ok
         base_hits += b_ok
-        mnemo_tokens += m_tok
+        tenax_tokens += m_tok
         base_tokens += b_tok
         print(f"{query[:46]:<48}{'✓' if m_ok else '✗':>8}{'✓' if b_ok else '✗':>10}")
 
     n = len(QA)
     print("-" * 66)
     print(f"\nRecall@budget={args.budget} tokens")
-    print(f"  Mnemo (hybrid + budget) : {mnemo_hits}/{n}  ({100*mnemo_hits/n:.0f}%)  avg {mnemo_tokens//n} tok")
+    print(f"  Tenax (hybrid + budget) : {tenax_hits}/{n}  ({100*tenax_hits/n:.0f}%)  avg {tenax_tokens//n} tok")
     print(f"  Baseline (recency-only) : {base_hits}/{n}  ({100*base_hits/n:.0f}%)  avg {base_tokens//n} tok")
 
 

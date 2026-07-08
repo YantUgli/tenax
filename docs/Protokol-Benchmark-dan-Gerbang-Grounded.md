@@ -1,10 +1,10 @@
 # Fase Perkuat & Buktikan Inti — Protokol Benchmark & Gerbang Keputusan Grounded
 
-Dokumen ini menjabarkan langkah demi langkah untuk (a) memperkuat inti memori Mnemo dan (b) mem-benchmark-nya secara terukur, sehingga hasil benchmark menjadi dasar objektif untuk keputusan: **"garap dimensi grounded atau tahan dulu".**
+Dokumen ini menjabarkan langkah demi langkah untuk (a) memperkuat inti memori Tenax dan (b) mem-benchmark-nya secara terukur, sehingga hasil benchmark menjadi dasar objektif untuk keputusan: **"garap dimensi grounded atau tahan dulu".**
 
 ## Prinsip pemandu: ukur → perbaiki → ukur lagi
 
-Jangan memperbaiki lebih dulu. Ambil **baseline** dari kondisi Mnemo sekarang, baru perbaiki bagian terlemah, lalu ukur ulang untuk melihat *delta*. Tanpa baseline, kamu tidak bisa membuktikan sebuah perbaikan benar-benar menaikkan angka — dan tidak bisa memakai angka itu sebagai gerbang keputusan.
+Jangan memperbaiki lebih dulu. Ambil **baseline** dari kondisi Tenax sekarang, baru perbaiki bagian terlemah, lalu ukur ulang untuk melihat *delta*. Tanpa baseline, kamu tidak bisa membuktikan sebuah perbaikan benar-benar menaikkan angka — dan tidak bisa memakai angka itu sebagai gerbang keputusan.
 
 Alurnya: `Baseline → Diagnosis → Perbaikan bertarget → Re-benchmark → Gerbang keputusan`.
 
@@ -37,16 +37,16 @@ Struktur harness (satu skrip, mis. `benchmark/longmemeval.py`):
 
 ---
 
-## Langkah 2 — Ukur baseline (kondisi Mnemo sekarang)
+## Langkah 2 — Ukur baseline (kondisi Tenax sekarang)
 
-Jalankan harness pada Mnemo apa adanya. Catat **empat kelompok metrik** — ini yang nanti jadi bahan gerbang keputusan:
+Jalankan harness pada Tenax apa adanya. Catat **empat kelompok metrik** — ini yang nanti jadi bahan gerbang keputusan:
 
-1. **Akurasi keseluruhan** (end-to-end QA). Konteks: sistem terdepan 2026 berada di kisaran ~92–94% LongMemEval. Angka Mnemo kemungkinan jauh di bawah itu di awal — itu wajar; yang penting posisi relatifnya dan tren perbaikannya.
+1. **Akurasi keseluruhan** (end-to-end QA). Konteks: sistem terdepan 2026 berada di kisaran ~92–94% LongMemEval. Angka Tenax kemungkinan jauh di bawah itu di awal — itu wajar; yang penting posisi relatifnya dan tren perbaikannya.
 2. **Akurasi per kategori.** LongMemEval memisahkan: single-session-user, single-session-assistant, single-session-preference, multi-session, **temporal-reasoning**, **knowledge-update**, dan **abstention**. Dua yang ditebalkan adalah diagnostik utama "inti rusak atau tidak".
 3. **Retrieval hit-rate.** Dari berapa persen soal, `context` benar-benar memuat fakta emas. Ini memisahkan kegagalan memori (fakta tak terambil) dari kegagalan reader (fakta ada tapi salah dijawab). Krusial: kalau failure ada di retrieval, itu masalah inti memori dan **harus** dibereskan sebelum grounded.
 4. **Efisiensi token.** Rata-rata token per query. Selalu pasangkan akurasi dengan biayanya — angka akurasi tanpa biaya menyesatkan.
 
-Sebagai pembanding, jalankan juga baseline naif: recency-only (sudah ada di `benchmark/run.py`) dan/atau full-context. Mnemo harus mengungguli keduanya dengan selisih jelas — kalau tidak, nilai tambah retrieval-nya belum terbukti.
+Sebagai pembanding, jalankan juga baseline naif: recency-only (sudah ada di `benchmark/run.py`) dan/atau full-context. Tenax harus mengungguli keduanya dengan selisih jelas — kalau tidak, nilai tambah retrieval-nya belum terbukti.
 
 ---
 

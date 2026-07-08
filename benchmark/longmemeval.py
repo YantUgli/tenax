@@ -1,9 +1,9 @@
-"""LongMemEval harness for Mnemo — the load-bearing benchmark of Langkah 1.
+"""LongMemEval harness for Tenax — the load-bearing benchmark of Langkah 1.
 
 LongMemEval (Wu et al., 2024) is 500 questions, each with its own multi-session chat
 history ("haystack") carrying per-session timestamps. It explicitly probes *knowledge
 update* and *temporal reasoning* — the two weakest spots of any long-term memory core —
-which is why it is the primary gate for deciding whether to extend Mnemo into grounded.
+which is why it is the primary gate for deciding whether to extend Tenax into grounded.
 
 Pipeline per question (mirrors the protocol):
 
@@ -346,7 +346,7 @@ def recency_recall(user_id: str, budget: int) -> tuple[str, int, int]:
     """Naive baseline recall: most-recent active memories packed to ``budget`` (no search).
 
     Mirrors ``benchmark/run.py``'s ``_baseline_recall`` — the "just keep the last N" strawman
-    Mnemo's hybrid recall is measured against (criterion #1). Returns (context, tokens, count).
+    Tenax's hybrid recall is measured against (criterion #1). Returns (context, tokens, count).
     """
     from sqlalchemy import select
 
@@ -458,7 +458,7 @@ def _pct(x) -> str:
 
 def print_summary(summary: dict, *, retrieval_only: bool) -> None:
     print("\n" + "=" * 60)
-    print("LongMemEval — Mnemo" + ("  [retrieval-only]" if retrieval_only else ""))
+    print("LongMemEval — Tenax" + ("  [retrieval-only]" if retrieval_only else ""))
     print("=" * 60)
     print(f"Items scored               : {summary['n_items']}")
     if not retrieval_only:
@@ -508,7 +508,7 @@ def estimate(items: list[dict], args) -> dict:
                 embed_prompt += st          # proxy: facts embedded ≈ raw session text (upper bound)
                 embed_calls += 1
 
-        # --- recall: Mnemo embeds the query; the recency baseline hits the DB only ---
+        # --- recall: Tenax embeds the query; the recency baseline hits the DB only ---
         if getattr(args, "baseline", "none") != "recency":
             embed_prompt += count_tokens(it.get("question", ""))
             embed_calls += 1
@@ -709,7 +709,7 @@ def run(args) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="LongMemEval harness for Mnemo")
+    p = argparse.ArgumentParser(description="LongMemEval harness for Tenax")
     p.add_argument("--dataset", required=True, help="path to longmemeval_s.json (or _m / _oracle)")
     p.add_argument("--out", default="benchmark/results/longmemeval.jsonl", help="per-item JSONL output")
     p.add_argument("--budget", type=int, default=1200, help="recall token budget (context size)")
@@ -741,7 +741,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--skip-ingest", action="store_true",
                    help="reuse bench namespaces from a prior --keep-users run (eval only, no extraction)")
     p.add_argument("--baseline", choices=("none", "recency"), default="none",
-                   help="'recency' = naive most-recent recall strawman instead of Mnemo hybrid recall")
+                   help="'recency' = naive most-recent recall strawman instead of Tenax hybrid recall")
     p.add_argument("--rotate-models", action="store_true",
                    help="opt-in: rotate the EXTRACTION model on quota-exceeded (requires --shuffle; lower validity)")
     p.add_argument("--rotation-models", default="qwen-turbo,qwen-plus",

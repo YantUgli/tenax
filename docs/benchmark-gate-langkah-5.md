@@ -17,7 +17,7 @@ Status enam kriteria gerbang keputusan grounded
 dengan 30 distraktor. Dalam budget 400 token yang sama:
 
 ```
-Mnemo (hybrid + budget) : 6/6  (100%)  avg 395 tok
+Tenax (hybrid + budget) : 6/6  (100%)  avg 395 tok
 Baseline (recency-only) : 0/6  (0%)    avg 400 tok
 ```
 

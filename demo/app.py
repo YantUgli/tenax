@@ -1,6 +1,6 @@
-"""Mnemo demo dashboard (Streamlit).
+"""Tenax demo dashboard (Streamlit).
 
-Talks to the Mnemo REST backend so the same UI works locally and against the
+Talks to the Tenax REST backend so the same UI works locally and against the
 Alibaba Cloud deployment. Run:  pipenv run streamlit run demo/app.py
 """
 from __future__ import annotations
@@ -11,10 +11,10 @@ import httpx
 import pandas as pd
 import streamlit as st
 
-API = os.getenv("MNEMO_API", "http://localhost:8000")
+API = os.getenv("TENAX_API", "http://localhost:8000")
 
-st.set_page_config(page_title="Mnemo — Qwen-powered memory", layout="wide")
-st.title("Mnemo — persistent memory for AI agents")
+st.set_page_config(page_title="Tenax — Qwen-powered memory", layout="wide")
+st.title("Tenax — persistent memory for AI agents")
 st.caption("Multi-tier memory · hybrid retrieval · belief revision · forgetting curve · consolidation — powered by Qwen Cloud")
 
 with st.sidebar:

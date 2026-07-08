@@ -1,9 +1,9 @@
-# Mnemo — Persistent Memory for AI Agents, powered by Qwen Cloud
+# Tenax — Persistent Memory for AI Agents, powered by Qwen Cloud
 
 > **Global AI Hackathon Series with Qwen Cloud — Track 1: MemoryAgent**
 
-Mnemo is a **self-managing, persistent memory layer** that any MCP-compatible agent can
-plug into. It gives an agent long-term memory across sessions: it decides what is worth
+Tenax (Latin *tenax* — "holding fast", as in *memoria tenax*) is a **self-managing,
+persistent memory layer** that any MCP-compatible agent can plug into. It gives an agent long-term memory across sessions: it decides what is worth
 remembering, retrieves the right memories within a tight token budget, forgets stale
 information, and periodically consolidates duplicates into canonical facts — all powered
 by **Qwen Cloud** (Qwen chat models + `text-embedding-v4`).
@@ -15,9 +15,9 @@ REST API** (for the demo UI and cloud deployment).
 
 ## Why this design wins Track 1
 
-Track 1 rewards three behaviours; Mnemo answers each directly:
+Track 1 rewards three behaviours; Tenax answers each directly:
 
-| Track-1 goal | How Mnemo does it |
+| Track-1 goal | How Tenax does it |
 |---|---|
 | Efficient storage & retrieval | Qwen extracts **distilled, self-contained** memories (not raw turns); **hybrid retrieval** = dense embeddings + Postgres full-text + recency + importance |
 | Forgetting stale info | An **Ebbinghaus-style decay score** (`importance · e^(-Δt/τ) · (1+ln(1+accesses))`) drives a sweep that archives low-value memories; access reinforces retention |
@@ -95,11 +95,11 @@ Claude Desktop (`claude_desktop_config.json`):
 ```json
 {
   "mcpServers": {
-    "mnemo": {
+    "tenax": {
       "command": "pipenv",
       "args": ["run", "python", "-m", "app.mcp_server"],
       "cwd": "/absolute/path/to/Qwen-Hackathon",
-      "env": { "QWEN_API_KEY": "sk-...", "DATABASE_URL": "postgresql+psycopg://mnemo:mnemo@localhost:5432/mnemo" }
+      "env": { "QWEN_API_KEY": "sk-...", "DATABASE_URL": "postgresql+psycopg://tenax:tenax@localhost:5432/tenax" }
     }
   }
 }

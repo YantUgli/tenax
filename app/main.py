@@ -1,4 +1,4 @@
-"""FastAPI REST surface for Mnemo.
+"""FastAPI REST surface for Tenax.
 
 Powers the Streamlit demo and, once deployed to Alibaba Cloud ECS, is the public
 backend the judges hit (satisfying the "backend running on Alibaba Cloud" requirement).
@@ -15,7 +15,7 @@ from pydantic import BaseModel
 from app.config import get_settings
 from app.db import init_db
 
-log = logging.getLogger("mnemo")
+log = logging.getLogger("tenax")
 
 
 @lru_cache
@@ -35,7 +35,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Mnemo", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="Tenax", version="0.1.0", lifespan=lifespan)
 
 
 # ------------------------------------------------------------------ schemas

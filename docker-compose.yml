@@ -2,17 +2,17 @@ services:
   db:
     image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_USER: mnemo
-      POSTGRES_PASSWORD: mnemo
-      POSTGRES_DB: mnemo
+      POSTGRES_USER: tenax
+      POSTGRES_PASSWORD: tenax
+      POSTGRES_DB: tenax
     ports:
       # Host 5433 -> container 5432 (avoids clashing with a local Postgres on 5432).
       # The app service talks to the db over the compose network on 5432 regardless.
       - "5433:5432"
     volumes:
-      - mnemo_pgdata:/var/lib/postgresql/data
+      - tenax_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U mnemo -d mnemo"]
+      test: ["CMD-SHELL", "pg_isready -U tenax -d tenax"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -24,7 +24,7 @@ services:
         condition: service_healthy
     environment:
       # Override host to the compose service name; other vars come from .env
-      DATABASE_URL: postgresql+psycopg://mnemo:mnemo@db:5432/mnemo
+      DATABASE_URL: postgresql+psycopg://tenax:tenax@db:5432/tenax
     env_file:
       - .env
     ports:
@@ -34,4 +34,4 @@ services:
              uvicorn app.main:app --host 0.0.0.0 --port 8000"
 
 volumes:
-  mnemo_pgdata:
+  tenax_pgdata:

@@ -2,7 +2,7 @@
 
 Menutup **gerbang Langkah 5 kriteria #6**: "fakta penting selamat setelah siklus
 forget/reflect" ([Protokol §Langkah 4](Protokol-Benchmark-dan-Gerbang-Grounded.md)).
-Benchmark standar (LongMemEval) tak menguji apakah mesin swakelola Mnemo justru **merusak**
+Benchmark standar (LongMemEval) tak menguji apakah mesin swakelola Tenax justru **merusak**
 memorinya sendiri seiring waktu; uji ini dibuat khusus untuk itu.
 
 ## Prasyarat kode (Bagian A)

@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     embed_dim: int = 1024
 
     # --- Database ---
-    database_url: str = "postgresql+psycopg://mnemo:mnemo@localhost:5432/mnemo"
+    database_url: str = "postgresql+psycopg://tenax:tenax@localhost:5432/tenax"
 
     # --- Memory tuning ---
     decay_tau_days: float = 14.0
