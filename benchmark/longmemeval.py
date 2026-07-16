@@ -339,6 +339,9 @@ def ingest_item(engine, item: dict, *, granularity: str, cheap: bool, max_sessio
             if text:
                 engine.remember(user_id, text, source=sid, event_time=sdt, cheap=cheap)
         n += 1
+        print(f"    ingest {item['question_id']}: session {n}", end="\r", flush=True)
+    if n:
+        print()  # newline so the next line doesn't overwrite this progress
     return n
 
 
@@ -643,6 +646,13 @@ def run(args) -> None:
                 print(f"\n[quota] Exhausted at item {i}/{len(items)} ({qid}): {exc}\n"
                       f"[quota] Stopping cleanly; {len(records)} item(s) completed and saved.",
                       file=sys.stderr)
+                stopped_early = True
+                break
+            except KeyboardInterrupt:
+                # manual Ctrl-C: checkpoint & stop cleanly instead of losing the summary
+                # and the in-memory token/cost usage tallied so far.
+                print(f"\n[interrupt] Stopped by user at item {i}/{len(items)} ({qid}); "
+                      f"{len(records)} item(s) completed and saved.", file=sys.stderr)
                 stopped_early = True
                 break
             except Exception as exc:  # keep going; a single bad item shouldn't kill a long run

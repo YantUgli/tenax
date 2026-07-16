@@ -21,7 +21,7 @@ curl -fsSL https://get.docker.com | sh
 ## 3. Ship the code + configure
 
 ```bash
-git clone <YOUR_PUBLIC_REPO_URL> tenax && cd tenax
+git clone https://github.com/YantUgli/tenax.git tenax && cd tenax
 cp .env.example .env      # set QWEN_API_KEY (leave DATABASE_URL; compose overrides host)
 ```
 

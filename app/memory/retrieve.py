@@ -32,7 +32,7 @@ def _encoder():
 
 
 def count_tokens(text: str) -> int:
-    return len(_encoder().encode(text or ""))
+    return len(_encoder().encode(text or "", disallowed_special=()))
 
 
 def _cosine(a: np.ndarray, b: np.ndarray) -> float:

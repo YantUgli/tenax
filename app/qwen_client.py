@@ -100,7 +100,8 @@ class QwenClient:
         model = model or (self._settings.qwen_cheap_model if cheap else self._settings.qwen_chat_model)
         resp = self._with_retry(
             lambda: self._client.chat.completions.create(
-                model=model, messages=messages, temperature=temperature
+                model=model, messages=messages, temperature=temperature,
+                extra_body={"enable_thinking": False},
             )
         )
         self._track_chat(resp)
@@ -129,6 +130,7 @@ class QwenClient:
                         messages=messages,
                         temperature=temperature,
                         response_format={"type": "json_object"},
+                        extra_body={"enable_thinking": False},
                     )
                 )
                 break
