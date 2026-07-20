@@ -46,10 +46,10 @@ function Footer() {
             </div>
             <div className="mt-1">PostgreSQL + pgvector</div>
             <a
-              href="https://github.com/YantUgli/Qwen-Hackathon"
+              href="https://github.com/YantUgli/tenax"
               className="mt-3 inline-block text-link hover:underline"
             >
-              github.com/YantUgli/Qwen-Hackathon
+              github.com/YantUgli/tenax
             </a>
           </div>
         </div>

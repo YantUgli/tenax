@@ -148,7 +148,7 @@ Claude Desktop (`claude_desktop_config.json`):
     "tenax": {
       "command": "pipenv",
       "args": ["run", "python", "-m", "app.mcp_server"],
-      "cwd": "/absolute/path/to/Qwen-Hackathon",
+      "cwd": "/absolute/path/to/tenax",
       "env": { "QWEN_API_KEY": "sk-...", "DATABASE_URL": "postgresql+psycopg://tenax:tenax@localhost:5432/tenax" }
     }
   }

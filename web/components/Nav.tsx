@@ -115,7 +115,7 @@ export function Nav() {
         </ul>
 
         <a
-          href="https://github.com/YantUgli/Qwen-Hackathon"
+          href="https://github.com/YantUgli/tenax"
           className="rounded-lg border border-border px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-foreground"
         >
           GitHub

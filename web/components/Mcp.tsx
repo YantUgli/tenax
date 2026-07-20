@@ -8,7 +8,7 @@ const CONFIG = `{
     "tenax": {
       "command": "pipenv",
       "args": ["run", "python", "-m", "app.mcp_server"],
-      "cwd": "/absolute/path/to/Qwen-Hackathon",
+      "cwd": "/absolute/path/to/tenax",
       "env": {
         "QWEN_API_KEY": "sk-...",
         "DATABASE_URL": "postgresql+psycopg://tenax:tenax@localhost:5432/tenax"
@@ -17,8 +17,8 @@ const CONFIG = `{
   }
 }`;
 
-const QUICKSTART = `git clone https://github.com/YantUgli/Qwen-Hackathon
-cd Qwen-Hackathon
+const QUICKSTART = `git clone https://github.com/YantUgli/tenax
+cd tenax
 pipenv install
 cp .env.example .env          # add your QWEN_API_KEY
 
