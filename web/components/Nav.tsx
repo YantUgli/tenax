@@ -88,10 +88,13 @@ export function Nav() {
           {/* On small screens the link list is hidden, so the tagline slot doubles as a
               "you are here" indicator. */}
           <span className="font-mono text-[11px] text-muted md:hidden">
-            {activeLabel ?? "memoria tenax"}
+            {activeLabel ?? "MCP memory server"}
           </span>
+          {/* A functional descriptor, not the Latin: once the page is scrolled this sticky
+              bar is the only branding left on screen, so it has to say what Tenax is. The
+              etymology lives in the hero, where there is room to gloss it. */}
           <span className="hidden font-mono text-[11px] text-muted md:inline">
-            memoria tenax
+            MCP memory server
           </span>
         </a>
 

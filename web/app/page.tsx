@@ -37,10 +37,11 @@ function Footer() {
               <TenaxMark className="size-4 text-accent" />
               <span className="font-mono text-base font-semibold">Tenax</span>
             </div>
+            {/* The etymology moved to the hero, where a first-time reader actually needs
+                it; repeating it here would just be the same gloss twice. */}
             <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
-              Latin <em>tenax</em> — &ldquo;holding fast&rdquo;, as in{" "}
-              <em>memoria tenax</em>. Built for the Global AI Hackathon with Qwen Cloud,
-              Track 1: MemoryAgent.
+              Self-managing persistent memory for AI agents. Built for the Global AI
+              Hackathon with Qwen Cloud, Track 1: MemoryAgent.
             </p>
           </div>
           <div className="font-mono text-xs leading-relaxed text-muted">

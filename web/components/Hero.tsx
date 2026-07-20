@@ -21,6 +21,13 @@ export function Hero() {
         running on Qwen Cloud.
       </p>
 
+      {/* Without this the product name is opaque on first read, and the footer's gloss
+          arrives long after anyone has decided whether to keep scrolling. */}
+      <p className="mt-5 font-mono text-xs leading-relaxed text-muted">
+        Latin <em>tenax</em> — &ldquo;holding fast&rdquo;, as in{" "}
+        <em>memoria tenax</em>, a memory that retains.
+      </p>
+
       <div className="mt-9 flex flex-wrap items-center gap-3">
         <a
           href="#mcp"
