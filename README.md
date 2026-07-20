@@ -69,27 +69,54 @@ a `superseded_by` pointer — recall serves the current truth instead of both ve
 
 ## Architecture
 
+```mermaid
+flowchart TB
+    subgraph CLIENTS["Clients"]
+        MCPC["MCP client<br/>Claude Desktop / Qwen"]
+        DASH["Streamlit dashboard<br/>demo/app.py"]
+    end
+
+    subgraph ECS["Alibaba Cloud ECS · Docker Compose"]
+        SRV["app/mcp_server.py<br/>5 MCP tools"]
+        API["app/main.py<br/>FastAPI REST"]
+        ENG["app/memory/engine.py"]
+        EX["extract.py<br/>what to remember"]
+        RV["revise.py<br/>belief revision"]
+        RT["retrieve.py<br/>hybrid + budget-aware recall"]
+        FG["forget.py<br/>decay + sweep"]
+        CO["consolidate.py<br/>reflection / distillation"]
+
+        SRV --> ENG
+        API --> ENG
+        ENG --> EX & RV & RT & FG & CO
+    end
+
+    subgraph QWEN["Qwen Cloud · DashScope-intl"]
+        TURBO["qwen-turbo"]
+        EMB["text-embedding-v4"]
+    end
+
+    DB[("PostgreSQL + pgvector<br/>vectors · metadata · full-text")]
+
+    subgraph BUILD["Build time only — no runtime link"]
+        BR["benchmark/results/*.summary.json"]
+        SITE["web/ — product site<br/>Next.js static export"]
+        BR -. "scripts/export_web_data" .-> SITE
+    end
+
+    MCPC -- "MCP stdio" --> SRV
+    DASH -- REST --> API
+
+    EX --> TURBO
+    RV --> TURBO
+    CO --> TURBO
+    RT --> EMB
+    ENG -- SQLAlchemy --> DB
+
+    ENG -. "scripts/record_replay" .-> SITE
 ```
-   MCP client (Claude/Qwen)      Streamlit dashboard        web/ product site
-            │ MCP (stdio)               │ REST                    ╎ (no runtime link)
-            ▼                           ▼                         ╎
-   ┌───────────────────────────────────────────────────────────┐  ╎ static export,
-   │  FastAPI + MCP server   (Alibaba Cloud ECS, Docker Compose) │  ╎ data baked in
-   │   app/mcp_server.py   →   app/memory/engine.py              │  ╎ at build time
-   │        ├─ extract.py       (Qwen: what to remember)         │  ╎
-   │        ├─ revise.py        (Qwen: belief revision/updates)  │  ╎
-   │        ├─ retrieve.py      (hybrid + budget-aware recall)   │  ╎
-   │        ├─ forget.py        (decay + sweep)                  │  ╎
-   │        └─ consolidate.py   (Qwen: reflection/distillation)  │  ╎
-   └───────────┬───────────────────────────────┬───────────────┘  ╎
-               │ Qwen Cloud (DashScope-intl)    │ SQLAlchemy       ╎
-               ▼                                ▼                  ╎
-     qwen-turbo                        PostgreSQL + pgvector        ╎
-     text-embedding-v4                 (vectors + metadata + FTS)   ╎
-                                                                    ╎
-     benchmark/results/*.summary.json ──[scripts/export_web_data]───┤
-     a recorded live session ──────────[scripts/record_replay]──────┘
-```
+
+The dashed arrows are build-time only — the site has no runtime edge to anything.
 
 The dashed edge matters: the site has **no runtime dependency** on the backend. It is fed
 offline by two generator scripts, so it renders even with the API, the database, and Qwen
