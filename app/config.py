@@ -37,6 +37,17 @@ class Settings(BaseSettings):
     revise_enabled: bool = True
     revise_similarity: float = 0.50
 
+    # Budget packing: Maximal Marginal Relevance. Greedy top-score packing lets a cluster
+    # of near-duplicate (or merely topic-adjacent) memories eat the budget, which starves
+    # multi-fact questions of their second fact — measured on LongMemEval temporal items,
+    # where "Buffalo Wild Wings" crowded out "Buffalo Bills". Each pick maximises
+    #   lambda * relevance - (1 - lambda) * max_similarity_to_already_selected
+    # lambda = 1.0 reproduces pure-relevance packing exactly, and is the default: measured
+    # at 0.7 on the 13 pinned temporal items it recovered no missing gold fact (the facts
+    # lose on semantic+recency score, not on redundancy), so the knob ships inert until
+    # there is evidence for a different value.
+    mmr_lambda: float = 1.0
+
     # Hybrid retrieval weights (need not sum to 1; combined score is a weighted sum)
     w_semantic: float = 0.55
     w_keyword: float = 0.20

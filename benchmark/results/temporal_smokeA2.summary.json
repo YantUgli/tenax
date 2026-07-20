@@ -1,0 +1,42 @@
+{
+  "n_items": 2,
+  "overall_accuracy": 0.5,
+  "per_category": {
+    "temporal-reasoning": {
+      "n": 2,
+      "accuracy": 0.5
+    }
+  },
+  "retrieval_hit_rate": 1.0,
+  "retrieval_hit_scored": 2,
+  "avg_tokens_per_query": 1193.0,
+  "elapsed_sec": 1707.6,
+  "errors": 0,
+  "usage": {
+    "chat_prompt": 322586,
+    "chat_completion": 112859,
+    "chat_calls": 148,
+    "embed_prompt": 48857,
+    "embed_calls": 216,
+    "chat_total": 435445,
+    "embed_total": 48857,
+    "rotation_model_idx": 0
+  },
+  "config": {
+    "dataset": "data/longmemeval_s.json",
+    "budget": 1200,
+    "candidate_k": 50,
+    "granularity": "session",
+    "cheap": false,
+    "cheap_extract": false,
+    "baseline": "none",
+    "retrieval_only": false,
+    "judge_model": null,
+    "sample": 0,
+    "seed": 13,
+    "shuffle": false,
+    "max_sessions_per_item": 0,
+    "skip_ingest": false,
+    "rotate_models": false
+  }
+}

@@ -1,0 +1,1309 @@
+{
+  "recorded_at": "2026-07-19T03:47:48.913975+00:00",
+  "user_id": "replay-demo",
+  "runtime": {
+    "extract_model": "qwen-turbo",
+    "embed_model": "text-embedding-v4",
+    "store": "PostgreSQL + pgvector",
+    "provider": "Qwen Cloud (DashScope-intl)"
+  },
+  "note": "Verbatim capture of a real run of scripts/record_replay.py. Replayed, not simulated.",
+  "steps": [
+    {
+      "caption": "Two months ago \u2014 the first real conversation.",
+      "text": "I'm Maya, I lead the recommendation engine team at Kalibrasi. My research advisor on the project is Dr. Lin. I live in Jakarta. Also worth noting: I'm allergic to shellfish, so team dinners need alternatives.",
+      "act": "remember",
+      "step": 1,
+      "at": "2026-05-18T03:47:48.913975+00:00",
+      "age_days": 62,
+      "response": {
+        "created": [
+          {
+            "id": 45759,
+            "user_id": "replay-demo",
+            "content": "Maya leads the recommendation engine team at Kalibrasi.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45760,
+            "user_id": "replay-demo",
+            "content": "Maya's research advisor on the project is Dr. Lin.",
+            "mem_type": "semantic",
+            "importance": 7.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45761,
+            "user_id": "replay-demo",
+            "content": "Maya lives in Jakarta.",
+            "mem_type": "semantic",
+            "importance": 6.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45762,
+            "user_id": "replay-demo",
+            "content": "Maya is allergic to shellfish, so team dinners need alternatives.",
+            "mem_type": "semantic",
+            "importance": 9.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": []
+      }
+    },
+    {
+      "caption": "Older trivia \u2014 never asked about again. Watch what happens to it.",
+      "text": "Facilities note: the office wifi password was rotated this morning, parking garage B is closed for resurfacing, and the coffee machine got fixed.",
+      "act": "remember",
+      "step": 2,
+      "at": "2026-05-05T03:47:48.913975+00:00",
+      "age_days": 75,
+      "response": {
+        "created": [
+          {
+            "id": 45763,
+            "user_id": "replay-demo",
+            "content": "The office wifi password was rotated.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-05-05T03:47:48.913975+00:00",
+            "event_time": "2026-05-05T00:00:00+00:00",
+            "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45764,
+            "user_id": "replay-demo",
+            "content": "Parking garage B is closed for resurfacing.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-05-05T03:47:48.913975+00:00",
+            "event_time": "2026-05-05T00:00:00+00:00",
+            "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45765,
+            "user_id": "replay-demo",
+            "content": "The coffee machine got fixed.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-05-05T03:47:48.913975+00:00",
+            "event_time": "2026-05-05T00:00:00+00:00",
+            "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": []
+      }
+    },
+    {
+      "caption": "A design decision, six weeks back.",
+      "text": "We evaluated Pinecone and Weaviate but settled on Postgres with pgvector for the vector store \u2014 it keeps the operational surface small and fits the budget.",
+      "act": "remember",
+      "step": 3,
+      "at": "2026-06-01T03:47:48.913975+00:00",
+      "age_days": 48,
+      "response": {
+        "created": [
+          {
+            "id": 45766,
+            "user_id": "replay-demo",
+            "content": "The team evaluated Pinecone and Weaviate but chose Postgres with pgvector for the vector store.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-06-01T03:47:48.913975+00:00",
+            "event_time": "2026-06-01T03:47:48.913975+00:00",
+            "last_accessed": "2026-06-01T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": []
+      }
+    },
+    {
+      "caption": "The same decision, restated later in different words.",
+      "text": "For the record, our vector store is pgvector running inside the main Postgres instance \u2014 we passed on Pinecone.",
+      "act": "remember",
+      "step": 4,
+      "at": "2026-06-29T03:47:48.913975+00:00",
+      "age_days": 20,
+      "response": {
+        "created": [
+          {
+            "id": 45767,
+            "user_id": "replay-demo",
+            "content": "The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-06-29T03:47:48.913975+00:00",
+            "event_time": "2026-06-29T03:47:48.913975+00:00",
+            "last_accessed": "2026-06-29T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": [
+          {
+            "id": 45766,
+            "content": "The team evaluated Pinecone and Weaviate but chose Postgres with pgvector for the vector store.",
+            "superseded_by": 45767
+          }
+        ]
+      }
+    },
+    {
+      "caption": "Recent chatter \u2014 the kind of thing that floods a recency-only memory.",
+      "text": "Quick update: the standup moved to 9:30, the staging deploy is green again, and I finally fixed the flaky pagination test.",
+      "act": "remember",
+      "step": 5,
+      "at": "2026-07-13T03:47:48.913975+00:00",
+      "age_days": 6,
+      "response": {
+        "created": [
+          {
+            "id": 45768,
+            "user_id": "replay-demo",
+            "content": "The standup meeting was moved to 9:30.",
+            "mem_type": "episodic",
+            "importance": 5.0,
+            "created_at": "2026-07-13T03:47:48.913975+00:00",
+            "event_time": "2026-07-13T00:00:00+00:00",
+            "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45769,
+            "user_id": "replay-demo",
+            "content": "The staging deploy is green again.",
+            "mem_type": "episodic",
+            "importance": 5.0,
+            "created_at": "2026-07-13T03:47:48.913975+00:00",
+            "event_time": "2026-07-13T00:00:00+00:00",
+            "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45770,
+            "user_id": "replay-demo",
+            "content": "The flaky pagination test was fixed.",
+            "mem_type": "episodic",
+            "importance": 5.0,
+            "created_at": "2026-07-13T03:47:48.913975+00:00",
+            "event_time": "2026-07-13T00:00:00+00:00",
+            "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": []
+      }
+    },
+    {
+      "caption": "More recent noise.",
+      "text": "The Q3 planning doc is in review, I'm on call next week, and the new intern starts on Monday.",
+      "act": "remember",
+      "step": 6,
+      "at": "2026-07-16T03:47:48.913975+00:00",
+      "age_days": 3,
+      "response": {
+        "created": [
+          {
+            "id": 45771,
+            "user_id": "replay-demo",
+            "content": "The Q3 planning doc is in review.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-16T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45772,
+            "user_id": "replay-demo",
+            "content": "The user is on call next week.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-16T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          },
+          {
+            "id": 45773,
+            "user_id": "replay-demo",
+            "content": "The new intern starts on Monday.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-16T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": []
+      }
+    },
+    {
+      "caption": "Ask something only an old memory can answer.",
+      "query": "We're booking a team dinner next week \u2014 anything I should know?",
+      "note": "A recency-only memory returns standups and deploy notes. Hybrid retrieval surfaces a 62-day-old allergy because importance and semantic match outrank recency.",
+      "act": "recall",
+      "step": 7,
+      "token_budget": 150,
+      "response": {
+        "memories": [
+          {
+            "id": 45762,
+            "user_id": "replay-demo",
+            "content": "Maya is allergic to shellfish, so team dinners need alternatives.",
+            "mem_type": "semantic",
+            "importance": 9.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.4689,
+              "semantic": 0.6049,
+              "keyword": 0.0,
+              "recency": 0.0119,
+              "importance": 0.9
+            },
+            "tokens": 23
+          },
+          {
+            "id": 45772,
+            "user_id": "replay-demo",
+            "content": "The user is on call next week.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-16T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.4271,
+              "semantic": 0.4934,
+              "keyword": 0.0,
+              "recency": 0.8071,
+              "importance": 0.5
+            },
+            "tokens": 18
+          },
+          {
+            "id": 45773,
+            "user_id": "replay-demo",
+            "content": "The new intern starts on Monday.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-16T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3285,
+              "semantic": 0.3142,
+              "keyword": 0.0,
+              "recency": 0.8071,
+              "importance": 0.5
+            },
+            "tokens": 17
+          },
+          {
+            "id": 45771,
+            "user_id": "replay-demo",
+            "content": "The Q3 planning doc is in review.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-16T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3251,
+              "semantic": 0.308,
+              "keyword": 0.0,
+              "recency": 0.8071,
+              "importance": 0.5
+            },
+            "tokens": 19
+          },
+          {
+            "id": 45768,
+            "user_id": "replay-demo",
+            "content": "The standup meeting was moved to 9:30.",
+            "mem_type": "episodic",
+            "importance": 5.0,
+            "created_at": "2026-07-13T03:47:48.913975+00:00",
+            "event_time": "2026-07-13T00:00:00+00:00",
+            "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3208,
+              "semantic": 0.3286,
+              "keyword": 0.0,
+              "recency": 0.6514,
+              "importance": 0.5
+            },
+            "tokens": 22
+          },
+          {
+            "id": 45759,
+            "user_id": "replay-demo",
+            "content": "Maya leads the recommendation engine team at Kalibrasi.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.2619,
+              "semantic": 0.2559,
+              "keyword": 0.0,
+              "recency": 0.0119,
+              "importance": 0.8
+            },
+            "tokens": 21
+          },
+          {
+            "id": 45763,
+            "user_id": "replay-demo",
+            "content": "The office wifi password was rotated.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-05-05T03:47:48.913975+00:00",
+            "event_time": "2026-05-05T00:00:00+00:00",
+            "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.2506,
+              "semantic": 0.3185,
+              "keyword": 0.0,
+              "recency": 0.0047,
+              "importance": 0.5
+            },
+            "tokens": 17
+          }
+        ],
+        "context": "- [2026-05-05] The office wifi password was rotated.\n- [2026-05-18] Maya is allergic to shellfish, so team dinners need alternatives.\n- [2026-05-18] Maya leads the recommendation engine team at Kalibrasi.\n- [2026-07-13] The standup meeting was moved to 9:30.\n- [2026-07-16] The user is on call next week.\n- [2026-07-16] The new intern starts on Monday.\n- [2026-07-16] The Q3 planning doc is in review.",
+        "tokens_used": 137,
+        "token_budget": 150,
+        "candidates_considered": 15
+      }
+    },
+    {
+      "caption": "A second question \u2014 this one keeps the storage decision alive.",
+      "query": "Which vector store did we end up choosing, and what did we rule out?",
+      "note": "Recall reinforces what it returns: these two get their retention clock reset.",
+      "act": "recall",
+      "step": 8,
+      "token_budget": 150,
+      "response": {
+        "memories": [
+          {
+            "id": 45767,
+            "user_id": "replay-demo",
+            "content": "The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-06-29T03:47:48.913975+00:00",
+            "event_time": "2026-06-29T03:47:48.913975+00:00",
+            "last_accessed": "2026-06-29T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.5576,
+              "semantic": 0.7521,
+              "keyword": 0.0,
+              "recency": 0.2396,
+              "importance": 0.8
+            },
+            "tokens": 31
+          },
+          {
+            "id": 45766,
+            "user_id": "replay-demo",
+            "content": "The team evaluated Pinecone and Weaviate but chose Postgres with pgvector for the vector store.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-06-01T03:47:48.913975+00:00",
+            "event_time": "2026-06-01T03:47:48.913975+00:00",
+            "last_accessed": "2026-06-01T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "archived",
+            "source": null,
+            "superseded_by": 45767,
+            "scores": {
+              "combined": 0.5189,
+              "semantic": 0.8242,
+              "keyword": 0.0,
+              "recency": 0.0324,
+              "importance": 0.8
+            },
+            "tokens": 46
+          },
+          {
+            "id": 45759,
+            "user_id": "replay-demo",
+            "content": "Maya leads the recommendation engine team at Kalibrasi.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+            "access_count": 1,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3812,
+              "semantic": 0.293,
+              "keyword": 0.0,
+              "recency": 1.0,
+              "importance": 0.8
+            },
+            "tokens": 21
+          },
+          {
+            "id": 45762,
+            "user_id": "replay-demo",
+            "content": "Maya is allergic to shellfish, so team dinners need alternatives.",
+            "mem_type": "semantic",
+            "importance": 9.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+            "access_count": 1,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3624,
+              "semantic": 0.2317,
+              "keyword": 0.0,
+              "recency": 1.0,
+              "importance": 0.9
+            },
+            "tokens": 23
+          },
+          {
+            "id": 45771,
+            "user_id": "replay-demo",
+            "content": "The Q3 planning doc is in review.",
+            "mem_type": "semantic",
+            "importance": 5.0,
+            "created_at": "2026-07-16T03:47:48.913975+00:00",
+            "event_time": "2026-07-16T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+            "access_count": 1,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3502,
+              "semantic": 0.3185,
+              "keyword": 0.0,
+              "recency": 1.0,
+              "importance": 0.5
+            },
+            "tokens": 19
+          }
+        ],
+        "context": "- [2026-05-18] Maya leads the recommendation engine team at Kalibrasi.\n- [2026-05-18] Maya is allergic to shellfish, so team dinners need alternatives.\n- [2026-06-01] PAST (superseded on 2026-06-29): The team evaluated Pinecone and Weaviate but chose Postgres with pgvector for the vector store.\n- [2026-06-29] The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.\n- [2026-07-16] The Q3 planning doc is in review.",
+        "tokens_used": 140,
+        "token_budget": 150,
+        "candidates_considered": 15
+      }
+    },
+    {
+      "caption": "A fact that genuinely contradicts a stored belief.",
+      "text": "I've relocated \u2014 I moved from Jakarta to Singapore to open the new office.",
+      "highlight": "belief_revision",
+      "act": "remember",
+      "step": 9,
+      "at": "2026-07-17T03:47:48.913975+00:00",
+      "age_days": 2,
+      "response": {
+        "created": [
+          {
+            "id": 45774,
+            "user_id": "replay-demo",
+            "content": "The user relocated from Jakarta to Singapore to open a new office.",
+            "mem_type": "episodic",
+            "importance": 8.0,
+            "created_at": "2026-07-17T03:47:48.913975+00:00",
+            "event_time": "2026-07-17T00:00:00+00:00",
+            "last_accessed": "2026-07-17T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null
+          }
+        ],
+        "superseded": [
+          {
+            "id": 45761,
+            "content": "Maya lives in Jakarta.",
+            "superseded_by": 45774
+          }
+        ]
+      }
+    },
+    {
+      "caption": "The same question, after revision.",
+      "query": "Where does Maya live?",
+      "note": "The stale belief is archived with a superseded_by pointer, so recall serves one current truth instead of two contradictory ones.",
+      "act": "recall",
+      "step": 10,
+      "token_budget": 150,
+      "response": {
+        "memories": [
+          {
+            "id": 45761,
+            "user_id": "replay-demo",
+            "content": "Maya lives in Jakarta.",
+            "mem_type": "semantic",
+            "importance": 6.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "archived",
+            "source": null,
+            "superseded_by": 45774,
+            "scores": {
+              "combined": 0.6117,
+              "semantic": 0.7063,
+              "keyword": 1.0,
+              "recency": 0.0119,
+              "importance": 0.6
+            },
+            "tokens": 30
+          },
+          {
+            "id": 45762,
+            "user_id": "replay-demo",
+            "content": "Maya is allergic to shellfish, so team dinners need alternatives.",
+            "mem_type": "semantic",
+            "importance": 9.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+            "access_count": 2,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.4933,
+              "semantic": 0.4697,
+              "keyword": 0.0,
+              "recency": 1.0,
+              "importance": 0.9
+            },
+            "tokens": 23
+          },
+          {
+            "id": 45759,
+            "user_id": "replay-demo",
+            "content": "Maya leads the recommendation engine team at Kalibrasi.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+            "access_count": 2,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.4384,
+              "semantic": 0.3972,
+              "keyword": 0.0,
+              "recency": 1.0,
+              "importance": 0.8
+            },
+            "tokens": 21
+          },
+          {
+            "id": 45774,
+            "user_id": "replay-demo",
+            "content": "The user relocated from Jakarta to Singapore to open a new office.",
+            "mem_type": "episodic",
+            "importance": 8.0,
+            "created_at": "2026-07-17T03:47:48.913975+00:00",
+            "event_time": "2026-07-17T00:00:00+00:00",
+            "last_accessed": "2026-07-17T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3609,
+              "semantic": 0.2803,
+              "keyword": 0.0,
+              "recency": 0.8668,
+              "importance": 0.8
+            },
+            "tokens": 23
+          },
+          {
+            "id": 45760,
+            "user_id": "replay-demo",
+            "content": "Maya's research advisor on the project is Dr. Lin.",
+            "mem_type": "semantic",
+            "importance": 7.0,
+            "created_at": "2026-05-18T03:47:48.913975+00:00",
+            "event_time": "2026-05-18T03:47:48.913975+00:00",
+            "last_accessed": "2026-05-18T03:47:48.913975+00:00",
+            "access_count": 0,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.3311,
+              "semantic": 0.4089,
+              "keyword": 0.0,
+              "recency": 0.0119,
+              "importance": 0.7
+            },
+            "tokens": 22
+          },
+          {
+            "id": 45767,
+            "user_id": "replay-demo",
+            "content": "The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.",
+            "mem_type": "semantic",
+            "importance": 8.0,
+            "created_at": "2026-06-29T03:47:48.913975+00:00",
+            "event_time": "2026-06-29T03:47:48.913975+00:00",
+            "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+            "access_count": 1,
+            "status": "active",
+            "source": null,
+            "superseded_by": null,
+            "scores": {
+              "combined": 0.2577,
+              "semantic": 0.0686,
+              "keyword": 0.0,
+              "recency": 1.0,
+              "importance": 0.8
+            },
+            "tokens": 31
+          }
+        ],
+        "context": "- [2026-05-18] PAST (superseded on 2026-07-17): Maya lives in Jakarta.\n- [2026-05-18] Maya is allergic to shellfish, so team dinners need alternatives.\n- [2026-05-18] Maya leads the recommendation engine team at Kalibrasi.\n- [2026-05-18] Maya's research advisor on the project is Dr. Lin.\n- [2026-06-29] The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.\n- [2026-07-17] The user relocated from Jakarta to Singapore to open a new office.",
+        "tokens_used": 150,
+        "token_budget": 150,
+        "candidates_considered": 16
+      }
+    },
+    {
+      "caption": "The store before maintenance, with live decay scores.",
+      "status": "all",
+      "label": "before",
+      "act": "list_memories",
+      "step": 11,
+      "response": [
+        {
+          "id": 45774,
+          "user_id": "replay-demo",
+          "content": "The user relocated from Jakarta to Singapore to open a new office.",
+          "mem_type": "episodic",
+          "importance": 8.0,
+          "created_at": "2026-07-17T03:47:48.913975+00:00",
+          "event_time": "2026-07-17T00:00:00+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.3545
+        },
+        {
+          "id": 45773,
+          "user_id": "replay-demo",
+          "content": "The new intern starts on Monday.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-07-16T03:47:48.913975+00:00",
+          "event_time": "2026-07-16T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45772,
+          "user_id": "replay-demo",
+          "content": "The user is on call next week.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-07-16T03:47:48.913975+00:00",
+          "event_time": "2026-07-16T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45771,
+          "user_id": "replay-demo",
+          "content": "The Q3 planning doc is in review.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-07-16T03:47:48.913975+00:00",
+          "event_time": "2026-07-16T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+          "access_count": 2,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.0493
+        },
+        {
+          "id": 45768,
+          "user_id": "replay-demo",
+          "content": "The standup meeting was moved to 9:30.",
+          "mem_type": "episodic",
+          "importance": 5.0,
+          "created_at": "2026-07-13T03:47:48.913975+00:00",
+          "event_time": "2026-07-13T00:00:00+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45770,
+          "user_id": "replay-demo",
+          "content": "The flaky pagination test was fixed.",
+          "mem_type": "episodic",
+          "importance": 5.0,
+          "created_at": "2026-07-13T03:47:48.913975+00:00",
+          "event_time": "2026-07-13T00:00:00+00:00",
+          "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.3257
+        },
+        {
+          "id": 45769,
+          "user_id": "replay-demo",
+          "content": "The staging deploy is green again.",
+          "mem_type": "episodic",
+          "importance": 5.0,
+          "created_at": "2026-07-13T03:47:48.913975+00:00",
+          "event_time": "2026-07-13T00:00:00+00:00",
+          "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.3257
+        },
+        {
+          "id": 45767,
+          "user_id": "replay-demo",
+          "content": "The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.",
+          "mem_type": "semantic",
+          "importance": 8.0,
+          "created_at": "2026-06-29T03:47:48.913975+00:00",
+          "event_time": "2026-06-29T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 2,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.6789
+        },
+        {
+          "id": 45766,
+          "user_id": "replay-demo",
+          "content": "The team evaluated Pinecone and Weaviate but chose Postgres with pgvector for the vector store.",
+          "mem_type": "semantic",
+          "importance": 8.0,
+          "created_at": "2026-06-01T03:47:48.913975+00:00",
+          "event_time": "2026-06-01T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+          "access_count": 1,
+          "status": "archived",
+          "source": null,
+          "superseded_by": 45767,
+          "decay_score": 1.3545
+        },
+        {
+          "id": 45761,
+          "user_id": "replay-demo",
+          "content": "Maya lives in Jakarta.",
+          "mem_type": "semantic",
+          "importance": 6.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 1,
+          "status": "archived",
+          "source": null,
+          "superseded_by": 45774,
+          "decay_score": 1.0159
+        },
+        {
+          "id": 45760,
+          "user_id": "replay-demo",
+          "content": "Maya's research advisor on the project is Dr. Lin.",
+          "mem_type": "semantic",
+          "importance": 7.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.1852
+        },
+        {
+          "id": 45762,
+          "user_id": "replay-demo",
+          "content": "Maya is allergic to shellfish, so team dinners need alternatives.",
+          "mem_type": "semantic",
+          "importance": 9.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 3,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 2.1477
+        },
+        {
+          "id": 45759,
+          "user_id": "replay-demo",
+          "content": "Maya leads the recommendation engine team at Kalibrasi.",
+          "mem_type": "semantic",
+          "importance": 8.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 3,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.909
+        },
+        {
+          "id": 45764,
+          "user_id": "replay-demo",
+          "content": "Parking garage B is closed for resurfacing.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-05-05T03:47:48.913975+00:00",
+          "event_time": "2026-05-05T00:00:00+00:00",
+          "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.0024
+        },
+        {
+          "id": 45763,
+          "user_id": "replay-demo",
+          "content": "The office wifi password was rotated.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-05-05T03:47:48.913975+00:00",
+          "event_time": "2026-05-05T00:00:00+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45765,
+          "user_id": "replay-demo",
+          "content": "The coffee machine got fixed.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-05-05T03:47:48.913975+00:00",
+          "event_time": "2026-05-05T00:00:00+00:00",
+          "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.0024
+        }
+      ]
+    },
+    {
+      "caption": "Decay sweep \u2014 archive what stopped earning its place.",
+      "note": "Facts that recall touched had their clock reset and survive; untouched trivia falls below the retention threshold.",
+      "act": "forget",
+      "step": 12,
+      "response": {
+        "scanned": 14,
+        "archived": 2,
+        "archived_ids": [
+          45764,
+          45765
+        ]
+      }
+    },
+    {
+      "caption": "Reflection \u2014 and it finds nothing left to do.",
+      "note": "Zero clusters, honestly reported: the restated vector-store decision was already collapsed at write time by belief revision (step 4), so periodic consolidation has no duplicates left. Reflection's merge behaviour is measured separately in the staleness benchmark (1 cluster found, 2 memories merged, 0 wrong merges).",
+      "act": "reflect",
+      "step": 13,
+      "response": {
+        "clusters_found": 0,
+        "memories_merged": 0,
+        "semantic_created": 0,
+        "merged_ids": []
+      }
+    },
+    {
+      "caption": "The store after maintenance.",
+      "status": "all",
+      "label": "after",
+      "act": "list_memories",
+      "step": 14,
+      "response": [
+        {
+          "id": 45774,
+          "user_id": "replay-demo",
+          "content": "The user relocated from Jakarta to Singapore to open a new office.",
+          "mem_type": "episodic",
+          "importance": 8.0,
+          "created_at": "2026-07-17T03:47:48.913975+00:00",
+          "event_time": "2026-07-17T00:00:00+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.3545
+        },
+        {
+          "id": 45771,
+          "user_id": "replay-demo",
+          "content": "The Q3 planning doc is in review.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-07-16T03:47:48.913975+00:00",
+          "event_time": "2026-07-16T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+          "access_count": 2,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.0493
+        },
+        {
+          "id": 45772,
+          "user_id": "replay-demo",
+          "content": "The user is on call next week.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-07-16T03:47:48.913975+00:00",
+          "event_time": "2026-07-16T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45773,
+          "user_id": "replay-demo",
+          "content": "The new intern starts on Monday.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-07-16T03:47:48.913975+00:00",
+          "event_time": "2026-07-16T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45770,
+          "user_id": "replay-demo",
+          "content": "The flaky pagination test was fixed.",
+          "mem_type": "episodic",
+          "importance": 5.0,
+          "created_at": "2026-07-13T03:47:48.913975+00:00",
+          "event_time": "2026-07-13T00:00:00+00:00",
+          "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.3257
+        },
+        {
+          "id": 45768,
+          "user_id": "replay-demo",
+          "content": "The standup meeting was moved to 9:30.",
+          "mem_type": "episodic",
+          "importance": 5.0,
+          "created_at": "2026-07-13T03:47:48.913975+00:00",
+          "event_time": "2026-07-13T00:00:00+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        },
+        {
+          "id": 45769,
+          "user_id": "replay-demo",
+          "content": "The staging deploy is green again.",
+          "mem_type": "episodic",
+          "importance": 5.0,
+          "created_at": "2026-07-13T03:47:48.913975+00:00",
+          "event_time": "2026-07-13T00:00:00+00:00",
+          "last_accessed": "2026-07-13T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.3257
+        },
+        {
+          "id": 45767,
+          "user_id": "replay-demo",
+          "content": "The vector store is pgvector running inside the main Postgres instance, and Pinecone was not chosen.",
+          "mem_type": "semantic",
+          "importance": 8.0,
+          "created_at": "2026-06-29T03:47:48.913975+00:00",
+          "event_time": "2026-06-29T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 2,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.6789
+        },
+        {
+          "id": 45766,
+          "user_id": "replay-demo",
+          "content": "The team evaluated Pinecone and Weaviate but chose Postgres with pgvector for the vector store.",
+          "mem_type": "semantic",
+          "importance": 8.0,
+          "created_at": "2026-06-01T03:47:48.913975+00:00",
+          "event_time": "2026-06-01T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:44.862048+00:00",
+          "access_count": 1,
+          "status": "archived",
+          "source": null,
+          "superseded_by": 45767,
+          "decay_score": 1.3545
+        },
+        {
+          "id": 45759,
+          "user_id": "replay-demo",
+          "content": "Maya leads the recommendation engine team at Kalibrasi.",
+          "mem_type": "semantic",
+          "importance": 8.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 3,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.909
+        },
+        {
+          "id": 45760,
+          "user_id": "replay-demo",
+          "content": "Maya's research advisor on the project is Dr. Lin.",
+          "mem_type": "semantic",
+          "importance": 7.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 1.1852
+        },
+        {
+          "id": 45762,
+          "user_id": "replay-demo",
+          "content": "Maya is allergic to shellfish, so team dinners need alternatives.",
+          "mem_type": "semantic",
+          "importance": 9.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 3,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 2.1477
+        },
+        {
+          "id": 45761,
+          "user_id": "replay-demo",
+          "content": "Maya lives in Jakarta.",
+          "mem_type": "semantic",
+          "importance": 6.0,
+          "created_at": "2026-05-18T03:47:48.913975+00:00",
+          "event_time": "2026-05-18T03:47:48.913975+00:00",
+          "last_accessed": "2026-07-19T03:48:46.684609+00:00",
+          "access_count": 1,
+          "status": "archived",
+          "source": null,
+          "superseded_by": 45774,
+          "decay_score": 1.0159
+        },
+        {
+          "id": 45765,
+          "user_id": "replay-demo",
+          "content": "The coffee machine got fixed.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-05-05T03:47:48.913975+00:00",
+          "event_time": "2026-05-05T00:00:00+00:00",
+          "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "archived",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.0024
+        },
+        {
+          "id": 45764,
+          "user_id": "replay-demo",
+          "content": "Parking garage B is closed for resurfacing.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-05-05T03:47:48.913975+00:00",
+          "event_time": "2026-05-05T00:00:00+00:00",
+          "last_accessed": "2026-05-05T03:47:48.913975+00:00",
+          "access_count": 0,
+          "status": "archived",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.0024
+        },
+        {
+          "id": 45763,
+          "user_id": "replay-demo",
+          "content": "The office wifi password was rotated.",
+          "mem_type": "semantic",
+          "importance": 5.0,
+          "created_at": "2026-05-05T03:47:48.913975+00:00",
+          "event_time": "2026-05-05T00:00:00+00:00",
+          "last_accessed": "2026-07-19T03:48:44.203847+00:00",
+          "access_count": 1,
+          "status": "active",
+          "source": null,
+          "superseded_by": null,
+          "decay_score": 0.8466
+        }
+      ]
+    }
+  ]
+}

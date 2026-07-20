@@ -39,6 +39,11 @@ def init_db() -> None:
     Base.metadata.create_all(engine)
 
     with engine.begin() as conn:
+        # create_all never ALTERs an existing table; add columns introduced after the
+        # table was first created so upgrades don't need a full rebuild.
+        conn.execute(
+            text("ALTER TABLE memories ADD COLUMN IF NOT EXISTS event_time TIMESTAMPTZ")
+        )
         conn.execute(
             text(
                 "CREATE INDEX IF NOT EXISTS ix_memories_embedding "

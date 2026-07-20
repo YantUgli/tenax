@@ -91,6 +91,10 @@ def consolidate(
             continue
 
         importance = max(m.importance for m in group)
+        # group is oldest -> newest; the canonical fact represents the current state, so it
+        # inherits the newest member's temporal anchor (created_at is left to default so
+        # decay/recency are unchanged).
+        anchor = group[-1].event_time or group[-1].created_at
         embeddings = client.embed(facts)
         created: list[Memory] = []
         for fact, emb in zip(facts, embeddings):
@@ -102,6 +106,7 @@ def consolidate(
                 embedding=emb,
                 access_count=sum(m.access_count for m in group),
                 source="consolidation",
+                event_time=anchor,
             )
             session.add(mem)
             created.append(mem)

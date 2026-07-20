@@ -1,0 +1,177 @@
+{
+  "measured_on": "2026-07-07",
+  "runtime": {
+    "provider": "Qwen Cloud (DashScope-intl)",
+    "extract_model": "qwen-turbo",
+    "embed_model": "text-embedding-v4",
+    "reader_model": "qwen3.7-plus"
+  },
+  "headline": {
+    "retrieval_hit_rate": 100.0,
+    "temporal_before": 15.4,
+    "temporal_after": 76.9,
+    "avg_tokens_per_query": 1187,
+    "token_budget": 1200
+  },
+  "accuracy": {
+    "baseline": {
+      "label": "qwen-turbo reader",
+      "n": 50,
+      "overall": 42.0,
+      "per_category": [
+        {
+          "category": "abstention",
+          "n": 3,
+          "accuracy": 100.0
+        },
+        {
+          "category": "knowledge-update",
+          "n": 7,
+          "accuracy": 42.9
+        },
+        {
+          "category": "multi-session",
+          "n": 12,
+          "accuracy": 33.3
+        },
+        {
+          "category": "single-session-assistant",
+          "n": 6,
+          "accuracy": 66.7
+        },
+        {
+          "category": "single-session-preference",
+          "n": 3,
+          "accuracy": 0.0
+        },
+        {
+          "category": "single-session-user",
+          "n": 6,
+          "accuracy": 83.3
+        },
+        {
+          "category": "temporal-reasoning",
+          "n": 13,
+          "accuracy": 15.4
+        }
+      ]
+    },
+    "reader_upgrade": {
+      "label": "qwen3.7-plus reader",
+      "n": 50,
+      "overall": 64.0,
+      "per_category": [
+        {
+          "category": "abstention",
+          "n": 3,
+          "accuracy": 100.0
+        },
+        {
+          "category": "knowledge-update",
+          "n": 7,
+          "accuracy": 71.4
+        },
+        {
+          "category": "multi-session",
+          "n": 12,
+          "accuracy": 66.7
+        },
+        {
+          "category": "single-session-assistant",
+          "n": 6,
+          "accuracy": 100.0
+        },
+        {
+          "category": "single-session-preference",
+          "n": 3,
+          "accuracy": 33.3
+        },
+        {
+          "category": "single-session-user",
+          "n": 6,
+          "accuracy": 83.3
+        },
+        {
+          "category": "temporal-reasoning",
+          "n": 13,
+          "accuracy": 30.8
+        }
+      ]
+    },
+    "temporal_fix": {
+      "label": "+ temporal validity (event_time)",
+      "n": 13,
+      "overall": 76.9,
+      "scope": "temporal-reasoning subset only"
+    },
+    "projected_overall": {
+      "value": 76.0,
+      "measured": false,
+      "note": "Projection: the qwen3.7-plus 50-item run with its temporal subset replaced by the separately measured 76.9%. Not a single end-to-end run."
+    }
+  },
+  "no_regression": {
+    "n": 12,
+    "overall": 91.7,
+    "claim": "Non-temporal categories held after the temporal change."
+  },
+  "retrieval": {
+    "hybrid_hits": 6,
+    "hybrid_total": 6,
+    "recency_hits": 0,
+    "recency_total": 6,
+    "budget_tokens": 400,
+    "n_distractors": 30
+  },
+  "belief_revision": {
+    "updates_applied": 6,
+    "n_updates": 6,
+    "traps_passed": 3,
+    "n_traps": 3,
+    "wrong_supersedes": 0
+  },
+  "staleness": {
+    "cycles": 3,
+    "accessed_survived": 6,
+    "important_total": 6,
+    "wrong_merges": 0,
+    "dormant_survived": 0
+  },
+  "sources": [
+    {
+      "artifact": "benchmark/results/baseline_oracle.summary.json",
+      "command": "benchmark.longmemeval",
+      "what": "qwen-turbo reader, LongMemEval oracle, n=50"
+    },
+    {
+      "artifact": "benchmark/results/qwen37plus_sample50.summary.json",
+      "command": "benchmark.longmemeval",
+      "what": "qwen3.7-plus reader, LongMemEval oracle, n=50"
+    },
+    {
+      "artifact": "benchmark/results/temporal_tier1A.summary.json",
+      "command": "benchmark.longmemeval",
+      "what": "temporal-reasoning subset after event_time validity, n=13"
+    },
+    {
+      "artifact": "benchmark/results/regression_nontemporal.summary.json",
+      "command": "benchmark.longmemeval",
+      "what": "non-temporal control set after the temporal change, n=12"
+    },
+    {
+      "artifact": "benchmark/results/hybrid_vs_naive.summary.json",
+      "command": "benchmark.run",
+      "what": "hybrid vs recency-only on a 30-distractor haystack"
+    },
+    {
+      "artifact": "benchmark/results/update.summary.json",
+      "command": "benchmark.update",
+      "what": "belief revision / knowledge update"
+    },
+    {
+      "artifact": "benchmark/results/staleness.summary.json",
+      "command": "benchmark.staleness",
+      "what": "3 forget+reflect cycles"
+    }
+  ]
+}

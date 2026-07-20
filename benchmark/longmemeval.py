@@ -229,9 +229,27 @@ def select_items(items: list[dict], args) -> list[dict]:
 _READER_SYSTEM = (
     "You are a helpful personal assistant with access to the user's long-term memory. "
     "Answer the user's question using ONLY the facts in the provided MEMORY CONTEXT. "
-    "Do not use outside knowledge or make assumptions beyond the context. "
-    "If the context does not contain the information needed to answer, say clearly that "
-    "you don't know or that the information is not available. Be concise and direct."
+    "Do not use outside knowledge or make assumptions beyond the context.\n"
+    "How to read the context:\n"
+    "- Each memory line starts with [YYYY-MM-DD]: the date the fact happened or became true "
+    "(already resolved to an absolute date). Treat this as the event's own date and use it "
+    "together with the Current date for any ordering, duration, or 'how long ago' arithmetic. "
+    "If a line still contains a relative expression, prefer the bracketed date.\n"
+    "- Lines marked 'PAST (superseded on <date>)' are earlier values that were later "
+    "replaced. Use them for questions about what was true BEFORE or ORIGINALLY; use the "
+    "unmarked lines for the current state.\n"
+    "How to answer:\n"
+    "- For questions about time, order, or duration: first list the relevant dated facts in "
+    "chronological order, then compute the ordering/duration/count step by step, then state "
+    "the final answer.\n"
+    "- For questions asking a total or count across multiple events: enumerate every "
+    "matching fact explicitly, then sum them.\n"
+    "- For questions asking for suggestions or recommendations: give a personalized "
+    "suggestion grounded in the user's stated preferences and past experiences, rather than "
+    "just restating facts.\n"
+    "- If the context genuinely does not contain the information needed, say clearly that "
+    "you don't know or that the information is not available.\n"
+    "Show your brief reasoning first, then give a clear final answer."
 )
 
 
@@ -383,6 +401,7 @@ def eval_item(engine, client, item: dict, args) -> dict:
         context, tokens_used, n_memories = recency_recall(user_id, args.budget)
         recalled_sources: set[str] = set()
         hit_evidence = None
+        coverage = None
     else:
         rec = engine.recall(user_id, question, token_budget=args.budget, candidate_k=args.candidate_k)
         context = rec.get("context", "")
@@ -392,6 +411,10 @@ def eval_item(engine, client, item: dict, args) -> dict:
         recalled_sources = {m.get("source") for m in memories if m.get("source")}
         # retrieval hit = a recalled memory came from a gold evidence session
         hit_evidence = bool(recalled_sources & evidence) if evidence else None
+        # coverage = EVERY gold evidence session is represented. hit_evidence only needs
+        # one, so it reads 100% even when a multi-fact question is missing the second fact
+        # it needs; coverage is the metric that actually moves with budget packing.
+        coverage = evidence.issubset(recalled_sources) if evidence else None
 
     # secondary, informational: does the gold answer string surface in context?
     hit_answer = None if is_abstention(item) else retrieval_hit(context, item.get("answer", ""))
@@ -408,6 +431,7 @@ def eval_item(engine, client, item: dict, args) -> dict:
         "recalled_sources": sorted(s for s in recalled_sources if s),
         "answer_session_ids": sorted(evidence),
         "retrieval_hit_evidence": hit_evidence,
+        "retrieval_coverage": coverage,
         "retrieval_hit_answer": hit_answer,
     }
 
@@ -425,6 +449,7 @@ def summarize(records: list[dict], *, retrieval_only: bool) -> dict:
     by_cat_total: dict[str, int] = defaultdict(int)
     by_cat_correct: dict[str, int] = defaultdict(int)
     hit_num = hit_den = 0
+    cov_num = cov_den = 0
     tokens = []
 
     for r in records:
@@ -435,6 +460,9 @@ def summarize(records: list[dict], *, retrieval_only: bool) -> dict:
         if r.get("retrieval_hit_evidence") is not None:
             hit_den += 1
             hit_num += 1 if r["retrieval_hit_evidence"] else 0
+        if r.get("retrieval_coverage") is not None:
+            cov_den += 1
+            cov_num += 1 if r["retrieval_coverage"] else 0
         tokens.append(r.get("tokens_used", 0))
 
     total = len(records)
@@ -451,6 +479,8 @@ def summarize(records: list[dict], *, retrieval_only: bool) -> dict:
         },
         "retrieval_hit_rate": (hit_num / hit_den) if hit_den else None,
         "retrieval_hit_scored": hit_den,
+        "retrieval_coverage_rate": (cov_num / cov_den) if cov_den else None,
+        "retrieval_coverage_scored": cov_den,
         "avg_tokens_per_query": (sum(tokens) / len(tokens)) if tokens else 0,
     }
 
@@ -468,6 +498,8 @@ def print_summary(summary: dict, *, retrieval_only: bool) -> None:
         print(f"Overall accuracy           : {_pct(summary['overall_accuracy'])}")
     print(f"Retrieval hit-rate (evid.) : {_pct(summary['retrieval_hit_rate'])}"
           f"   (over {summary['retrieval_hit_scored']} items with gold sessions)")
+    print(f"Retrieval coverage (ALL)   : {_pct(summary.get('retrieval_coverage_rate'))}"
+          f"   (every gold session represented)")
     print(f"Avg tokens / query         : {summary['avg_tokens_per_query']:.0f}")
     print("-" * 60)
     print(f"{'category':<28}{'n':>4}{'accuracy':>12}")
@@ -635,7 +667,8 @@ def run(args) -> None:
                     n_sessions = None  # reuse the namespace ingested by a prior --keep-users run
                 else:
                     n_sessions = ingest_item(
-                        engine, item, granularity=args.granularity, cheap=args.cheap,
+                        engine, item, granularity=args.granularity,
+                        cheap=(args.cheap or args.cheap_extract),
                         max_sessions=args.max_sessions_per_item,
                     )
                 record = eval_item(engine, client, item, args)
@@ -693,7 +726,8 @@ def run(args) -> None:
     summary["usage"] = client.usage()
     summary["config"] = {
         "dataset": args.dataset, "budget": args.budget, "candidate_k": args.candidate_k,
-        "granularity": args.granularity, "cheap": args.cheap, "baseline": args.baseline,
+        "granularity": args.granularity, "cheap": args.cheap,
+        "cheap_extract": args.cheap_extract, "baseline": args.baseline,
         "retrieval_only": args.retrieval_only, "judge_model": args.judge_model,
         "sample": args.sample, "seed": args.seed, "shuffle": args.shuffle,
         "max_sessions_per_item": args.max_sessions_per_item, "skip_ingest": args.skip_ingest,
@@ -727,6 +761,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--granularity", choices=("session", "turn"), default="session",
                    help="ingest one remember() per session (cheaper) or per turn")
     p.add_argument("--cheap", action="store_true", help="use the cheap Qwen model for extraction + reader")
+    p.add_argument("--cheap-extract", action="store_true",
+                   help="use the cheap Qwen model for extraction (+belief-revision) only, keeping the "
+                        "main model for the reader. Extraction is mechanical; the reader does the "
+                        "reasoning — this cuts ingest cost/time without touching answer quality.")
     p.add_argument("--retrieval-only", action="store_true",
                    help="skip reader+judge; measure only retrieval hit-rate + tokens (cheap)")
     p.add_argument("--judge-model", default=None, help="override judge model (default: chat model)")
@@ -760,6 +798,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    # Windows consoles/pipes default to cp1252, which crashes on the ✓/✗/⚠ status glyphs
+    # this harness prints. Force UTF-8 so a long run never dies at a progress line.
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
     run(build_parser().parse_args())
 
 

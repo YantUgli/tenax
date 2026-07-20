@@ -40,7 +40,9 @@ class MemoryEngine:
         event occurred* rather than now(). This is what makes temporal reasoning and
         recency measurable — without it every replayed memory looks equally recent.
         """
-        extracted = _extract.extract_memories(self._client, text, cheap=cheap)
+        extracted = _extract.extract_memories(
+            self._client, text, cheap=cheap, event_time=event_time
+        )
         if not extracted:
             return {"created": [], "note": "nothing worth remembering"}
 
@@ -60,6 +62,10 @@ class MemoryEngine:
                 if event_time is not None:
                     mem.created_at = event_time
                     mem.last_accessed = event_time
+                # Temporal anchor for recall ordering: the date the extractor resolved out
+                # of the fact itself ("last Tuesday" -> 2023-05-09) when present, else the
+                # session/event time. Kept separate from created_at so decay is unaffected.
+                mem.event_time = e.get("event_time") or event_time
                 session.add(mem)
                 session.flush()
                 new_mems.append(mem)

@@ -19,10 +19,20 @@ venv/
 
 # Data / logs
 *.log
-data/
+# Anchored to the repo root on purpose: this is for the LongMemEval datasets, which are
+# large and externally sourced. Unanchored it would also swallow web/data/, whose two
+# generated JSON files ARE the site's content and must be committed.
+/data/
 *.sqlite
 
 # OS / editor
 .DS_Store
 .idea/
 .vscode/
+
+# Local agent/editor tooling — developer environment, not part of the product.
+.claude/
+CLAUDE.md
+AGENTS.md
+.cursor/
+.aider*

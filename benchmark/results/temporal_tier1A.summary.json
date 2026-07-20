@@ -1,0 +1,30 @@
+{
+  "n_items": 13,
+  "overall_accuracy": 0.7692307692307693,
+  "per_category": {
+    "temporal-reasoning": {
+      "n": 13,
+      "accuracy": 0.7692307692307693
+    }
+  },
+  "retrieval_hit_rate": 1.0,
+  "retrieval_hit_scored": 13,
+  "avg_tokens_per_query": 1191.2307692307693,
+  "note": "Tier 1 Mechanism A validation; 13 pinned temporal ids via --ids; run completed all items but process exited before writing summary — regenerated from JSONL.",
+  "config": {
+    "dataset": "data/longmemeval_s.json",
+    "budget": 1200,
+    "candidate_k": 50,
+    "granularity": "session",
+    "ids_pinned": true,
+    "reader": "qwen3.7-plus",
+    "keep_users": true
+  },
+  "baseline_comparison": {
+    "source": "qwen37plus_sample50",
+    "temporal_baseline": "4/13 (30.8%)",
+    "temporal_now": "10/13 (76.9%)",
+    "flips": 6,
+    "regressions": 0
+  }
+}

@@ -9,7 +9,13 @@ Export this diagram to `docs/architecture.png` (e.g. paste the Mermaid block int
 flowchart TB
     subgraph Clients
         A[MCP client<br/>Claude Desktop / Qwen]
-        B[Streamlit demo dashboard]
+        B[Streamlit dashboard<br/>live, hands-on]
+    end
+
+    subgraph Site["web/ — product site (static export)"]
+        W["Next.js, no runtime backend"]
+        WD[("web/data<br/>benchmark.json · replay.json")]
+        WD --> W
     end
 
     subgraph ECS["Alibaba Cloud ECS (Docker Compose)"]
@@ -37,7 +43,22 @@ flowchart TB
     C -- distill --> Q1
     RE -- embed query --> Q2
     E -- store / query --> DB
+
+    %% Build-time only: the site is fed offline by generator scripts and has no
+    %% runtime link to the API, the database, or Qwen Cloud.
+    BR["benchmark/results/*.summary.json"] -. scripts/export_web_data .-> WD
+    E -. scripts/record_replay .-> WD
 ```
+
+## Why the site has no runtime dependency
+
+`web/` is a static export. Its figures come from `benchmark/results/` and its demo replays
+a session captured from a real engine run — both baked in at build time by the generator
+scripts. The site therefore renders correctly even when the API, Postgres, and Qwen Cloud
+are all unavailable, while still showing nothing but real measured output.
+
+The Streamlit dashboard is the opposite trade and is kept for exactly that reason: it is
+the surface where someone can type their own text and watch the memory react live.
 
 ## Memory lifecycle
 

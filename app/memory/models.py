@@ -54,6 +54,16 @@ class Memory(Base):
     last_accessed: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
     access_count: Mapped[int] = mapped_column(Integer, default=0)
 
+    # When the fact is temporally anchored — the date the event happened or the state
+    # began — as opposed to created_at (when Tenax recorded it). Set from the absolute
+    # date the extractor resolves out of the text ("last Tuesday" -> 2023-05-09). Used
+    # ONLY for temporal rendering/ordering at recall; decay and recency still key off
+    # created_at/last_accessed, so the forgetting behaviour is unchanged. Null when the
+    # text carries no datable anchor (recall then falls back to created_at).
+    event_time: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
+
     status: Mapped[MemStatus] = mapped_column(
         Enum(MemStatus, name="mem_status"), default=MemStatus.active, index=True
     )
@@ -68,6 +78,7 @@ class Memory(Base):
             "mem_type": self.mem_type.value if isinstance(self.mem_type, MemType) else self.mem_type,
             "importance": self.importance,
             "created_at": self.created_at.isoformat() if self.created_at else None,
+            "event_time": self.event_time.isoformat() if self.event_time else None,
             "last_accessed": self.last_accessed.isoformat() if self.last_accessed else None,
             "access_count": self.access_count,
             "status": self.status.value if isinstance(self.status, MemStatus) else self.status,

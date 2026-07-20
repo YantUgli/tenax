@@ -13,6 +13,43 @@ REST API** (for the demo UI and cloud deployment).
 
 ---
 
+## Repository layout — start here
+
+**The product is `app/`.** Everything else supports it: measures it, documents it, or
+presents it. If you are here to review the implementation, read
+[app/mcp_server.py](app/mcp_server.py) and [app/memory/](app/memory/) and nothing else.
+
+```
+app/            ← THE PRODUCT: MCP server + memory engine
+  mcp_server.py     5 MCP tools over stdio (remember/recall/forget/reflect/list_memories)
+  memory/           extract · revise · retrieve · forget · consolidate  ← the engine
+  main.py           REST API (7 endpoints), for the dashboard and cloud deploy
+  qwen_client.py    every Qwen Cloud call goes through here
+
+benchmark/      measurement harness; raw run records in benchmark/results/
+docs/           engineering write-ups, benchmark protocol, architecture
+scripts/        setup utilities + the generators that feed the site's data
+demo/           Streamlit dashboard — the live, hands-on surface (talks to the REST API)
+web/            product site — static, presentational, no runtime backend
+infra/          Docker Compose / Alibaba Cloud ECS deployment
+```
+
+Two front-ends on purpose, because they do different jobs:
+
+| | `demo/` (Streamlit) | `web/` (Next.js) |
+|---|---|---|
+| Purpose | **Try it yourself** — feed it your own text, live | **Understand it** — what, why, and the measured results |
+| Backend | Needs the REST API + Postgres + a Qwen key running | None. Static export, deploys anywhere |
+| Data | Live, whatever you type | Generated from real runs, replayed deterministically |
+
+The site never calls a live backend: its benchmark figures are generated from
+`benchmark/results/` by [scripts/export_web_data.py](scripts/export_web_data.py), and its
+demo replays a real session captured by
+[scripts/record_replay.py](scripts/record_replay.py). That coupling is deliberate — no
+number on the site can drift away from the artifact that produced it.
+
+---
+
 ## Why this design wins Track 1
 
 Track 1 rewards three behaviours; Tenax answers each directly:
@@ -33,23 +70,30 @@ a `superseded_by` pointer — recall serves the current truth instead of both ve
 ## Architecture
 
 ```
-        MCP client (Claude/Qwen)         Streamlit demo dashboard
-                 │ MCP (stdio)                    │ REST
-                 ▼                                ▼
-   ┌───────────────────────────────────────────────────────────┐
-   │  FastAPI + MCP server   (Alibaba Cloud ECS, Docker Compose) │
-   │   app/mcp_server.py   →   app/memory/engine.py              │
-   │        ├─ extract.py       (Qwen: what to remember)         │
-   │        ├─ revise.py        (Qwen: belief revision/updates)  │
-   │        ├─ retrieve.py      (hybrid + budget-aware recall)   │
-   │        ├─ forget.py        (decay + sweep)                  │
-   │        └─ consolidate.py   (Qwen: reflection/distillation)  │
-   └───────────┬───────────────────────────────┬───────────────┘
-               │ Qwen Cloud (DashScope-intl)    │ SQLAlchemy
-               ▼                                ▼
-     qwen-turbo                        PostgreSQL + pgvector
-     text-embedding-v4                 (vectors + metadata + FTS)
+   MCP client (Claude/Qwen)      Streamlit dashboard        web/ product site
+            │ MCP (stdio)               │ REST                    ╎ (no runtime link)
+            ▼                           ▼                         ╎
+   ┌───────────────────────────────────────────────────────────┐  ╎ static export,
+   │  FastAPI + MCP server   (Alibaba Cloud ECS, Docker Compose) │  ╎ data baked in
+   │   app/mcp_server.py   →   app/memory/engine.py              │  ╎ at build time
+   │        ├─ extract.py       (Qwen: what to remember)         │  ╎
+   │        ├─ revise.py        (Qwen: belief revision/updates)  │  ╎
+   │        ├─ retrieve.py      (hybrid + budget-aware recall)   │  ╎
+   │        ├─ forget.py        (decay + sweep)                  │  ╎
+   │        └─ consolidate.py   (Qwen: reflection/distillation)  │  ╎
+   └───────────┬───────────────────────────────┬───────────────┘  ╎
+               │ Qwen Cloud (DashScope-intl)    │ SQLAlchemy       ╎
+               ▼                                ▼                  ╎
+     qwen-turbo                        PostgreSQL + pgvector        ╎
+     text-embedding-v4                 (vectors + metadata + FTS)   ╎
+                                                                    ╎
+     benchmark/results/*.summary.json ──[scripts/export_web_data]───┤
+     a recorded live session ──────────[scripts/record_replay]──────┘
 ```
+
+The dashed edge matters: the site has **no runtime dependency** on the backend. It is fed
+offline by two generator scripts, so it renders even with the API, the database, and Qwen
+Cloud all unavailable — while still showing only real, measured output.
 
 See [docs/architecture.md](docs/architecture.md) (export a PNG from there for the submission).
 
@@ -78,11 +122,17 @@ docker compose up -d db
 pipenv run python -m scripts.init_db
 pipenv run uvicorn app.main:app --reload
 
-# 5. open the demo
+# 5. open the live dashboard — feed it your own text and watch the memory react
 pipenv run streamlit run demo/app.py
 ```
 
 Or run the whole stack in containers: `docker compose up --build`.
+
+To run the product site instead (static, needs none of the above):
+
+```bash
+cd web && npm install && npm run dev     # http://localhost:3000
+```
 
 ## Use as an MCP server
 
