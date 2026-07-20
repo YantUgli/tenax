@@ -120,7 +120,7 @@ export function DemoConsole() {
                 where you are instead. Hidden on the narrowest screens so the status chip and
                 buttons keep the header to one row. */}
             <span className="hidden font-mono text-[11px] text-muted sm:inline">
-              memoria tenax · live demo
+              live demo
             </span>
           </div>
 
