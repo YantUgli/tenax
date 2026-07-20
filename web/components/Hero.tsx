@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { benchmark } from "@/lib/data";
 
 export function Hero() {
@@ -41,6 +43,12 @@ export function Hero() {
         >
           Watch a real session
         </a>
+        <Link
+          href="/demo"
+          className="rounded-lg border border-accent/40 bg-accent/5 px-5 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent/10"
+        >
+          Try it live →
+        </Link>
       </div>
 
       <dl className="mt-11 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">

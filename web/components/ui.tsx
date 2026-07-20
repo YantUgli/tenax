@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 /**
  * The Tenax mark ("Cascade"): a 2x2 grid stepping down in opacity — what is held vs. what
  * fades. Inlined rather than an <img> to public/logo.svg so it inherits currentColor and
- * costs no extra request; the opacities match files/tenax-brand-assets/icon.svg exactly.
+ * costs no extra request; the opacities match brand/icon.svg exactly.
  *
  * The favicon deliberately uses lifted opacities (0.7/0.52/0.36) so the faded squares
  * survive 16px. Those do not belong here — at nav size the design values read fine.

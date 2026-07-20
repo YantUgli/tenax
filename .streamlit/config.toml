@@ -1,0 +1,21 @@
+# Streamlit theme for demo/app.py.
+#
+# Colours are the Tenax design tokens, copied verbatim from web/app/globals.css so the
+# Streamlit dashboard and the Next.js console at /demo read as the same product. Keep the two
+# in sync: globals.css is the source of truth.
+#
+#   --background  #07090d     --foreground  #e7ecf3     --accent  #f5b544
+#   --surface     #0e1219     --muted       #8b97a8     --border  #1f2733
+#
+# This file lives at the repo root, not in demo/, because Streamlit reads its project config
+# from the working directory the command is launched in — and the documented command is
+# `pipenv run streamlit run demo/app.py`, run from here. A config.toml under demo/ is silently
+# ignored (verified with `streamlit config show`).
+
+[theme]
+base = "dark"
+
+primaryColor = "#f5b544"             # --accent: buttons, slider, focus rings
+backgroundColor = "#07090d"          # --background: the page canvas
+secondaryBackgroundColor = "#0e1219" # --surface: sidebar, code blocks, table headers
+textColor = "#e7ecf3"                # --foreground

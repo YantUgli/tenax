@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { replay, type ReplayStep } from "@/lib/data";
 import { Pill, Section } from "@/components/ui";
@@ -148,6 +149,16 @@ export function Replay() {
         <span className="text-accent-dim">◆</span> Captured by{" "}
         <code>scripts/record_replay.py</code> · full transcript in{" "}
         <code>web/data/replay.json</code>
+      </p>
+
+      {/* The handoff: this replay is fixed and cannot fail mid-demo, which is exactly why it
+          proves nothing a recording couldn't. The live console is where someone types their
+          own query. */}
+      <p className="mt-3 text-sm text-muted">
+        This session is a recording — identical every viewing.{" "}
+        <Link href="/demo" className="text-link hover:underline">
+          Drive a live instance yourself →
+        </Link>
       </p>
     </Section>
   );

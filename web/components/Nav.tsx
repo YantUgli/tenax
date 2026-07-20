@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { TenaxMark } from "@/components/ui";
@@ -7,7 +8,9 @@ import { TenaxMark } from "@/components/ui";
 const NAV = [
   { id: "problem", label: "Problem" },
   { id: "how", label: "How it works" },
-  { id: "demo", label: "Demo" },
+  // Label deliberately not "Demo": it would sit beside the "Live demo →" route link and the
+  // two would read as the same destination. This one scrolls to the recorded session.
+  { id: "demo", label: "Walkthrough" },
   { id: "benchmark", label: "Benchmark" },
   { id: "integrations", label: "Works with" },
   { id: "mcp", label: "Install" },
@@ -122,12 +125,23 @@ export function Nav() {
           })}
         </ul>
 
-        <a
-          href="https://github.com/YantUgli/tenax"
-          className="rounded-lg border border-border px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-foreground"
-        >
-          GitHub
-        </a>
+        <div className="flex items-center gap-2">
+          {/* A route, not a section — deliberately outside NAV so it never enters SECTION_IDS
+              and the scroll-spy observer. Styled as the accented affordance because it is the
+              one link on the page that leaves it. */}
+          <Link
+            href="/demo"
+            className="rounded-lg border border-accent/40 bg-accent/5 px-3 py-1.5 font-mono text-xs text-accent transition-colors hover:bg-accent/10"
+          >
+            Live demo →
+          </Link>
+          <a
+            href="https://github.com/YantUgli/tenax"
+            className="rounded-lg border border-border px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-foreground"
+          >
+            GitHub
+          </a>
+        </div>
       </nav>
     </header>
   );

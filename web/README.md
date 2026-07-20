@@ -1,11 +1,26 @@
 # Tenax — product site
 
-Static Next.js site introducing Tenax: what it is, how the memory loop works, the measured
-benchmark results, and how to install it as an MCP server.
+Next.js site introducing Tenax: what it is, how the memory loop works, the measured benchmark
+results, and how to install it as an MCP server — plus a live console at `/demo` that drives a
+running instance.
 
-It is a **static export** (`output: "export"`), deliberately: the site must render with no
-Tenax backend, database, or Qwen Cloud key available. Nothing on the page calls an API at
-runtime.
+Two routes, two very different contracts:
+
+| Route | Rendering | Needs a backend? |
+|---|---|---|
+| `/` | Prerendered at build time from `data/` | **No.** Renders with no backend, no database and no Qwen key. Calls nothing at runtime. |
+| `/demo` | Client-side, through the proxy at `app/api/tenax` | Optional — falls back to sample data and says so |
+
+The landing page's independence is deliberate and load-bearing: it must render when nothing
+else is up. That is why it stays free of runtime calls even though the site is no longer a
+static export.
+
+`/demo` is the exception, and the reason `output: "export"` was dropped. It needs the route
+handler at `app/api/tenax/[...path]/route.ts`, which proxies to the backend server-side. That
+proxy solves three things at once: the backend has no CORS middleware, it is published over
+plain `http` (so an https page cannot call it directly — mixed content), and proxying keeps
+the backend URL out of the client bundle. When the backend is unreachable the console shows
+sample data behind a "Sample data · offline" chip rather than failing.
 
 ## Data is generated, never hand-written
 
@@ -26,16 +41,39 @@ pipenv run python -m scripts.record_replay   # needs the DB up and QWEN_API_KEY 
 cd web && npm run build
 ```
 
-The demo section **replays** that recorded session rather than calling a live backend. It is
-identical on every viewing and cannot fail while someone is watching — but every response
-shown is real output, not a mock.
+The demo *section* on `/` **replays** that recorded session rather than calling a live backend.
+It is identical on every viewing and cannot fail while someone is watching — but every response
+shown is real output, not a mock. The `/demo` *route* is the opposite trade: live, and
+therefore fallible.
 
 ## Develop
 
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # static export -> out/
+npm run build
 ```
 
-Deploy `out/` to any static host (Vercel, or the ECS box next to the API).
+To exercise `/demo` against a real backend, point it at one and bring it up first:
+
+```bash
+cd .. && docker compose up -d db && pipenv run python -m scripts.init_db
+pipenv run uvicorn app.main:app --reload        # :8000
+
+cd web && TENAX_API_URL=http://localhost:8000 npm run dev
+```
+
+Without `TENAX_API_URL` the proxy defaults to `http://localhost:8000`.
+
+## Deploy
+
+The site now needs a **Node runtime** — `next start`, or any host that runs Next.js (Vercel,
+or the ECS box next to the API). It is no longer a static `out/` bundle.
+
+| Variable | Purpose |
+|---|---|
+| `TENAX_API_URL` | Backend the `/demo` proxy forwards to. Server-side only; never reaches the browser. Defaults to `http://localhost:8000`. |
+| `NEXT_PUBLIC_SITE_URL` | Absolute base for social card URLs. |
+
+Because the proxy runs server-side, the backend can stay on plain `http` behind the security
+group while the site is served over `https`.

@@ -53,6 +53,50 @@ html {
   scroll-behavior: smooth;
 }
 
+/* --- /demo only -------------------------------------------------------------
+   The live console's motion vocabulary. `casc` is the Cascade mark pulsing while a request
+   is in flight; `fadeup` is how results arrive, staggered per card; `fadeout` is a memory
+   being archived by the forget sweep. All three are clamped by the reduced-motion block
+   below. */
+@keyframes tnx-casc {
+  0%,
+  100% {
+    opacity: 0.16;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes tnx-fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes tnx-fadeout {
+  to {
+    opacity: 0.18;
+    filter: grayscale(1);
+  }
+}
+
+/* The scrollable panels on /demo: the default scrollbar is a bright slab against this
+   background, so it reads as chrome rather than as part of the panel. */
+.tnx-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.tnx-scroll::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
