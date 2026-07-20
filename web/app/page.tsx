@@ -6,6 +6,7 @@ import { Replay } from "@/components/Replay";
 import { Benchmark } from "@/components/Benchmark";
 import { Integrations } from "@/components/Integrations";
 import { Mcp } from "@/components/Mcp";
+import { TenaxMark } from "@/components/ui";
 import { benchmark } from "@/lib/data";
 
 export default function Home() {
@@ -32,7 +33,10 @@ function Footer() {
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <div className="font-mono text-base font-semibold">Tenax</div>
+            <div className="flex items-center gap-2">
+              <TenaxMark className="size-4 text-accent" />
+              <span className="font-mono text-base font-semibold">Tenax</span>
+            </div>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
               Latin <em>tenax</em> — &ldquo;holding fast&rdquo;, as in{" "}
               <em>memoria tenax</em>. Built for the Global AI Hackathon with Qwen Cloud,

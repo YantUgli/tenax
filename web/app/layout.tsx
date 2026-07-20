@@ -13,11 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tenax — self-managing persistent memory for AI agents",
+  // Social cards need absolute URLs. The deploy host isn't fixed yet, so it comes from the
+  // build environment; set NEXT_PUBLIC_SITE_URL when deploying or cards will point at the
+  // placeholder below. opengraph-image.tsx is picked up automatically — no images entry.
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://tenax.example.com",
+  ),
+  title: "Tenax | Self-Managing AI Memory",
   description:
     "An MCP server that gives any compatible agent long-term memory: hybrid retrieval inside a token budget, belief revision, and a forgetting curve. Built on Qwen Cloud.",
   openGraph: {
-    title: "Tenax — self-managing persistent memory for AI agents",
+    title: "Tenax | Self-Managing AI Memory",
     description:
       "Hybrid retrieval, belief revision, and a forgetting curve, exposed as five MCP tools. 100% retrieval hit rate on LongMemEval.",
     type: "website",

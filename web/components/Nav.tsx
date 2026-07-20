@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { TenaxMark } from "@/components/ui";
+
 const NAV = [
   { id: "problem", label: "Problem" },
   { id: "how", label: "How it works" },
@@ -79,6 +81,9 @@ export function Nav() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur">
       <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8">
         <a href="#top" className="flex items-baseline gap-2">
+          {/* self-center opts the mark out of the baseline alignment the text spans want:
+              a square sitting on the text baseline reads as if it has fallen. */}
+          <TenaxMark className="size-4.5 self-center text-accent" />
           <span className="font-mono text-lg font-semibold tracking-tight">Tenax</span>
           {/* On small screens the link list is hidden, so the tagline slot doubles as a
               "you are here" indicator. */}
